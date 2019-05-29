@@ -14,7 +14,7 @@ $(document).ready(function(){
 		var file = $('#uploadFile')[0].files[0];
 		console.log(file);
 		var data = new FormData();
-		data.set("file", file);
+		data.set("files", file);
 		console.log(data);
 		
 		for (var key of data.entries()) {

@@ -35,6 +35,9 @@ import rs.ac.uns.ftn.ues.dto.UserDTO;
 import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.EBook;
 import rs.ac.uns.ftn.ues.entity.Language;
+import rs.ac.uns.ftn.ues.lucene.indexing.Indexer;
+import rs.ac.uns.ftn.ues.lucene.model.IndexUnit;
+import rs.ac.uns.ftn.ues.lucene.model.UploadModel;
 import rs.ac.uns.ftn.ues.service.EBookServiceInterface;
 
 @RestController
@@ -85,50 +88,104 @@ public class EBookController {
 	
 	
 	
+//	@PostMapping(value = "/save")
+//	private ResponseEntity<String> saveFile(@RequestParam("file") MultipartFile file) {
+//		System.out.println("ovo je file sto saljem " + file);
+//		
+//        try {
+////        	if(Files.exists(DATA_DIR_PATH, file.getOriginalFilename()));
+////        	Files.copy(file.getInputStream(), Paths.get(DATA_DIR_PATH, file.getOriginalFilename()));
+////			saveFilee(file);
+////        	UploadModel um = file.
+//        	indexUploadedFile(file);
+//		} catch (Exception e) {
+//			System.out.println("ovo nije uspelo");
+//			e.printStackTrace();
+//		}
+//        return new ResponseEntity<String>("Successfully uploaded!", HttpStatus.OK);
+//	}
+	
 	@PostMapping(value = "/save")
-	private ResponseEntity<String> saveFile(@RequestParam("file") MultipartFile file) {
+	private ResponseEntity<String> saveFile(@ModelAttribute UploadModel file) {
 		System.out.println("ovo je file sto saljem " + file);
 		
         try {
 //        	if(Files.exists(DATA_DIR_PATH, file.getOriginalFilename()));
-        	Files.copy(file.getInputStream(), Paths.get(DATA_DIR_PATH, file.getOriginalFilename()));
+//        	Files.copy(file.getInputStream(), Paths.get(DATA_DIR_PATH, file.getOriginalFilename()));
 //			saveFilee(file);
+        	indexUploadedFile(file);
 		} catch (Exception e) {
 			System.out.println("ovo nije uspelo");
 			e.printStackTrace();
 		}
         return new ResponseEntity<String>("Successfully uploaded!", HttpStatus.OK);
-        
-		
 	}
 	
-//	private void saveFilee(MultipartFile multipartFile) throws Exception {
-//		Files.copy(multipartFile.getInputStream(), Paths.get(DATA_DIR_PATH, multipartFile.getOriginalFilename()));
-////	    String destination = "/files/"  + multipartFile.getOriginalFilename();
-////	    File file = new File(destination);
-////	    multipartFile.transferTo(file);
-//	}
+	private String saveFilee(MultipartFile multipartFile) throws IOException {
+		String retVal = null;
+		if (!multipartFile.isEmpty()) {
+			byte[] bytes = multipartFile.getBytes();
+//			Path path = Paths.get(getResourceFilePath(DATA_DIR_PATH).getAbsolutePath() + File.separator + multipartFile.getOriginalFilename());
+			Path path = Paths.get(DATA_DIR_PATH + File.separator + multipartFile.getOriginalFilename());
+			Files.write(path, bytes);
+//			Files.copy(multipartFile.getInputStream(), Paths.get(DATA_DIR_PATH, multipartFile.getOriginalFilename()));
+			retVal = path.toString();
+		}
+		return retVal;
+	}
 	
 	
 	
-//	private void indexUploadedFile(EBook model) throws IOException{
-////		String fileName = saveUploadedFile(file);
-////    	for (MultipartFile file : model.getFiles()) {
-////
-////            if (file.isEmpty()) {
-////                continue; //next please
-////            }
-////            String fileName = saveUploadedFile(file);
-////            if(fileName != null){
-////            	IndexUnit indexUnit = Indexer.getInstance().getHandler(fileName).getIndexUnit(new File(fileName));
-////            	indexUnit.setTitle(model.getTitle());
-////            	indexUnit.setKeywords(new ArrayList<String>(Arrays.asList(model.getKeywords().split(" "))));
-////            	Indexer.getInstance().add(indexUnit.getLuceneDocument());
-////            }
-////    	}
-//    }
+	private void indexUploadedFile(UploadModel model) throws IOException{
+//		if (file.isEmpty()) {
+////			continue;
+//		}
+//		try {
+//			String fileName = saveFilee(file);
+//			if (fileName != null) {
+//				IndexUnit iu = Indexer.getInstance().getHandler(fileName).getIndexUnit(new File(fileName));
+//				iu.setTitle(file.get);
+//			}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		System.out.println("znaci model");
+		System.out.println("ovo je model sta god: " + model);
+		System.out.println("ovo su model.getfiles: " + model.getFiles());
+		
+    	for (MultipartFile file : model.getFiles()) {
+
+            if (file.isEmpty()) {
+                continue; //next please
+            }
+            String fileName = saveFilee(file);
+            if(fileName != null){
+            	IndexUnit indexUnit = Indexer.getInstance().getHandler(fileName).getIndexUnit(new File(fileName));
+//            	indexUnit.setTitle(model.getTitle());
+            	indexUnit.setTitle("naslov bratee");
+            	indexUnit.setText("nzm jel obavezno");
+            	indexUnit.setFiledate("idk");
+            	List<String> keywords = new ArrayList<>();
+            	keywords.add("bla blaaa");
+            	indexUnit.setKeywords(keywords);
+//            	indexUnit.setKeywords(new ArrayList<String>(Arrays.asList(model.getKeywords().split(" "))));
+            	Indexer.getInstance().add(indexUnit.getLuceneDocument());
+            }
+    	}
+    }
 	
-	
+	private File getResourceFilePath(String path) {
+		URL url = this.getClass().getClassLoader().getResource(path);
+		File file = null;
+		try {
+			file = new File(url.toURI());
+		} catch (URISyntaxException e) {
+			file = new File(url.getPath());
+		}
+		return file;
+	}
 	
 	
 	
