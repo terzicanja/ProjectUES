@@ -32,6 +32,11 @@ public class PDFHandler extends DocumentHandler {
 			
 			String title = "" + info.getTitle();
 			iu.setTitle(title);
+			System.out.println("pdf handler ajde title: "+ title);
+			
+			String author = ""+info.getAuthor();
+			iu.setAuthor(author);
+			System.out.println("autor u pdf handleru: " + author);
 			
 			String keywords = "" + info.getKeywords();
 			if (keywords != null) {
@@ -40,13 +45,14 @@ public class PDFHandler extends DocumentHandler {
 			}
 			
 			iu.setFilename(file.getCanonicalPath());
+			System.out.println("ovo je filename u pdf handleru: " + file.getCanonicalPath());
 			
 			String modDate = DateTools.dateToString(new Date(file.lastModified()), Resolution.DAY);
 			iu.setFiledate(modDate);
 			
 			pdf.close();
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("Greksa pri konvertovanju dokumenta u pdf");
 		}
 		return iu;
 	}

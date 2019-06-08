@@ -21,8 +21,7 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 
-import com.mysql.cj.protocol.Protocol.GetProfilerEventHandlerInstanceFunction;
-
+import rs.ac.uns.ftn.ues.lucene.indexing.analysers.SerbianAnalyzer;
 import rs.ac.uns.ftn.ues.lucene.indexing.handlers.DocumentHandler;
 import rs.ac.uns.ftn.ues.lucene.indexing.handlers.PDFHandler;
 import rs.ac.uns.ftn.ues.lucene.indexing.handlers.TextDocHandler;
@@ -42,7 +41,7 @@ public class Indexer {
 	}
 	
 	private Indexer(String path, boolean restart) {
-		IndexWriterConfig iwc = new IndexWriterConfig(); //!!!!!!!!!!!!!!!!!!!!!!!
+		IndexWriterConfig iwc = new IndexWriterConfig(new SerbianAnalyzer()); 
 		if(restart) {
 			iwc.setOpenMode(OpenMode.CREATE);
 		}else {
@@ -136,7 +135,7 @@ public class Indexer {
 			}
 			return false;
 		} catch (IOException e) {
-			throw new IllegalArgumentException("Index directory is worng");
+			throw new IllegalArgumentException("Index directory is wrong");
 		}
 	}
 	

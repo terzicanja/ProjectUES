@@ -163,9 +163,12 @@ public class EBookController {
             String fileName = saveFilee(file);
             if(fileName != null){
             	IndexUnit indexUnit = Indexer.getInstance().getHandler(fileName).getIndexUnit(new File(fileName));
-//            	indexUnit.setTitle(model.getTitle());
-            	indexUnit.setTitle("naslov bratee");
-            	indexUnit.setText("nzm jel obavezno");
+            	System.out.println("u kontroleru model.gettitle jebe mater: " + model.getTitle());
+            	indexUnit.setTitle(model.getTitle());
+//            	indexUnit.setTitle("naslov bratee");
+            	System.out.println("aj opet ovo je autor modela: "+model.getAuthor());
+            	indexUnit.setAuthor(model.getAuthor());
+            	indexUnit.setText(model.getText());
             	indexUnit.setFiledate("idk");
             	List<String> keywords = new ArrayList<>();
             	keywords.add("bla blaaa");
