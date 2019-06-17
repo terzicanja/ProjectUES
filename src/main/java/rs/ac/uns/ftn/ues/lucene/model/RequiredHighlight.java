@@ -6,7 +6,7 @@ public final class RequiredHighlight {
 	private String value;
 	
 	public RequiredHighlight() {
-		
+		super();
 	}
 
 	public RequiredHighlight(String fieldName, String value) {

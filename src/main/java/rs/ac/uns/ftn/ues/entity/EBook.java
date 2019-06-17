@@ -26,6 +26,9 @@ public class EBook implements Serializable {
 	@Column(name = "year", unique = false, nullable = true)
 	private Integer year;
 	
+	@Column(name = "filename", nullable = true)
+	private String filename;
+	
 	//nije obavezno valjda
 	@Column(name = "mime", unique = false, nullable = true)
 	private String mime;
@@ -43,19 +46,23 @@ public class EBook implements Serializable {
 	public EBook() {
 		
 	}
+	
+	
 
-	public EBook(Integer id, String title, String author, String keywords, Integer year, String mime, Language language,
-			Category category) {
+	public EBook(Integer id, String title, String author, String keywords, Integer year, String filename, String mime,
+			Language language, Category category) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.keywords = keywords;
 		this.year = year;
+		this.filename = filename;
 		this.mime = mime;
 		this.language = language;
 		this.category = category;
 	}
+
 
 	public Integer getId() {
 		return id;
@@ -120,14 +127,26 @@ public class EBook implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "EBook [id=" + id + ", title=" + title + ", author=" + author + ", keywords=" + keywords + ", year="
-				+ year + ", mime=" + mime + ", language=" + language + ", category=" + category + "]";
+				+ year + ", filename=" + filename + ", mime=" + mime + ", language=" + language + ", category="
+				+ category + "]";
 	}
-	
-	
+
+
+
 	
 	
 	

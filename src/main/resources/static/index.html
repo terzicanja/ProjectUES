@@ -13,160 +13,200 @@
   </head>
   
   <body id="SearchForm">
+  
   	
-  	<!-- 
-  	<div class="container bg-danger col-lg-6 col-lg-offset-3 text-center">
-  		<div class="row align-items-center">
-  			
-  			<div class="col align-center">
-  			
-  			<div class="form-group">
-  				<label class="col-sm-2" for="title">Title:</label>
-  				<div class="col-sm-10">
-  					<input type="text" class="form-control" id="title" placeholder="Title...">
-  				</div>
-  			</div>
-  			<div class="form-group">
-  				<label class="col-sm-2" for="artist">Artist:</label>
-  				<div class="col-sm-10">
-  					<input type="text" class="form-control" id="artist" placeholder="Artist...">
-  				</div>
-  			</div>
-  			<div class="form-group">
-  				<div clas="col-sm-5">
-  					<button type="button" id="searchbtn" class="btn center-block">Search</button>
-  				</div>
-  			</div>
-  			
-  			</div>
-  			
-  		</div>
-  	</div>
-  	 -->
-  	 
-  	 
-  	 
-  	 
+  	
   	 
   	 <div class="search-form d-flex justify-content-center">
 		
 			<div class="col-md-2 col-sm-0"></div>
-		
+			
 			<div class="main-div col-md-8 col-sm-12 justify-content-center">
 	    		<div class="panel">
 		   			<h3>Search eBooks</h3>
 		   			<p>Please enter your info</p>
 	   			</div>
-	    		<form id="Login">
 	    		
-	    			<div class="part">
-	    			<select class="browser-default custom-select col-md-4" name="prefix1">
-  						<option selected value="1">Author</option>
-  						<option value="2">Title</option>
-  						<option value="3">Year</option>
-  						<option value="3">Language</option>
-  						<option value="3">Keywords</option>
-					</select>
-		            <input type="text" class="form-control col-md-6" name="content1" id="inputName" autocomplete="off">
-		        	<select class="browser-default custom-select col-md-1" name="operator1">
-  						<option selected value="1">And</option>
-  						<option value="2">Or</option>
-  						<option value="3">Not</option>
-					</select>
-					</div>
-		        	
-		        	
-		        	<div class="part">
-		        	<select class="browser-default custom-select col-md-4" name="prefix2">
-  						<option value="1">Author</option>
-  						<option selected value="2">Title</option>
-  						<option value="3">Year</option>
-  						<option value="3">Language</option>
-  						<option value="3">Keywords</option>
-					</select>
-		            <input type="text" class="form-control col-md-6" name="content2" id="inputSurname" autocomplete="off">
-		        	<select class="browser-default custom-select col-md-1" name="operator2">
-  						<option selected value="1">And</option>
-  						<option value="2">Or</option>
-  						<option value="3">Not</option>
-					</select>
-					</div>
-		        	
-		        	
-		        	<div class="part">
-		        	<select class="browser-default custom-select col-md-4" name="prefix3">
-  						<option value="1">Author</option>
-  						<option value="2">Title</option>
-  						<option selected value="3">Year</option>
-  						<option value="3">Language</option>
-  						<option value="3">Keywords</option>
-					</select>
-		            <input type="text" class="form-control col-md-6" name="content3" id="inputUsername" autocomplete="off">
-		        	<select class="browser-default custom-select col-md-1" name="operator3">
-  						<option selected value="1">And</option>
-  						<option value="2">Or</option>
-  						<option value="3">Not</option>
-					</select>
-					</div>
-					
-					
-					<div class="part">
-		        	<select class="browser-default custom-select col-md-4" name="prefix4">
-  						<option value="1">Author</option>
-  						<option value="2">Title</option>
-  						<option value="3">Year</option>
-  						<option selected value="3">Language</option>
-  						<option value="3">Keywords</option>
-					</select>
-		            <input type="text" class="form-control col-md-6" name="content4" id="inputUsername" autocomplete="off">
-		        	<select class="browser-default custom-select col-md-1" name="operator4">
-  						<option selected value="1">And</option>
-  						<option value="2">Or</option>
-  						<option value="3">Not</option>
-					</select>
-					</div>
-					
-					
-					<div class="part">
-		        	<select class="browser-default custom-select col-md-4" name="prefix5">
-  						<option value="1">Author</option>
-  						<option value="2">Title</option>
-  						<option value="3">Year</option>
-  						<option value="3">Language</option>
-  						<option selected value="3">Keywords</option>
-					</select>
-		            <input type="text" class="form-control col-md-6" name="content5" id="inputUsername" autocomplete="off">
-		        	<select class="browser-default custom-select col-md-1" name="operator5">
-  						<option selected value="1">And</option>
-  						<option value="2">Or</option>
-  						<option value="3">Not</option>
-					</select>
-					</div>
-		        	
-		        	
-		        	
-		        	
-		        	
-		        	
-		        	<div class="form-group">
-		            	<input type="text" class="form-control" id="inputFuzzy" autocomplete="off" placeholder="Fuzzy">
-		        	</div>
-	
-		        	<div class="form-group">
-		            	<input type="text" class="form-control" id="inputPhrase" autocomplete="off" placeholder="Phrase">
-		        	</div>
-		
-		        	<div class="form-group">
-		            	<input type="password" class="form-control" id="inputPassword" placeholder="Password">
-		        	</div>
-		        	
-		        	<div class="register">
-		        		<p>Already have an account? <a href="login.html">Login here!</a></p>
-					</div>
-					
-		        	<button type="submit" class="btn btn-primary" id="register">Sign up</button>
-	
-	    		</form>
+	    		
+	    		<div id="accordion">
+	    		
+				  <div class="card">
+				    <div class="card-header" id="headingOne">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				          Search
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+				      <div class="card-body">
+				        
+				        
+				        <form id="termSearch">
+				        	<div class="part">
+				        	<p class="naslov">Term search</p>
+			    			<select class="browser-default custom-select col-md-3" name="termField" id="termField">
+		  						<option selected value="author">Author</option>
+		  						<option value="title">Title</option>
+		  						<option value="text">Text</option>
+		  						<option value="year">Year</option>
+		  						<option value="language">Language</option>
+		  						<option value="keywords">Keywords</option>
+							</select>
+				            <input type="text" class="form-control col-md-6" placeholder="Value" name="termValue" id="termValue" autocomplete="off">
+							<button type="submit" class="btn btn-primary col-md-2" id="searchTerm">Search</button>
+							</div>
+						</form>
+				        	
+				        <form id="fuzzySearch">
+				        	<div class="part">
+				        	<p class="naslov">Fuzzy search</p>
+			    			<select class="browser-default custom-select col-md-3" name="fuzzyField" id="fuzzyField">
+		  						<option selected value="author">Author</option>
+		  						<option value="title">Title</option>
+		  						<option value="text">Text</option>
+		  						<option value="year">Year</option>
+		  						<option value="language">Language</option>
+		  						<option value="keywords">Keywords</option>
+							</select>
+				            <input type="text" class="form-control col-md-6" placeholder="Value" name="fuzzyValue" id="fuzzyValue" autocomplete="off">
+							<button type="submit" class="btn btn-primary col-md-2" id="searchFuzzy">Search</button>
+							</div>
+						</form>
+				        	
+				        <form id="phraseSearch">
+				        	<div class="part">
+				        	<p class="naslov">Phrase search</p>
+			    			<select class="browser-default custom-select col-md-3" name="phraseField" id="phraseField">
+		  						<option selected value="author">Author</option>
+		  						<option value="title">Title</option>
+		  						<option value="text">Text</option>
+		  						<option value="year">Year</option>
+		  						<option value="language">Language</option>
+		  						<option value="keywords">Keywords</option>
+							</select>
+				            <input type="text" class="form-control col-md-6" placeholder="Value" name="phraseValue" id="phraseValue" autocomplete="off">
+							<button type="submit" class="btn btn-primary col-md-2" id="searchPhrase">Search</button>
+							</div>
+						</form>
+				      		
+				        
+				        
+				      </div>
+				    </div>
+				  </div>
+				  
+				  
+				  <div class="card">
+				    <div class="card-header" id="headingTwo">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				          Advanced search
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+				      <div class="card-body">
+				        
+				        <form id="advanced">
+	    		
+			    			<div class="part">
+			    			<select class="browser-default custom-select col-md-3" name="prefix1">
+		  						<option selected value="author">Author</option>
+		  						<option value="title">Title</option>
+		  						<option value="year">Year</option>
+		  						<option value="language">Language</option>
+		  						<option value="keywords">Keywords</option>
+							</select>
+				            <input type="text" class="form-control col-md-6" name="content1" id="inputValue1" autocomplete="off">
+				        	<select class="browser-default custom-select col-md-2" name="operator1">
+		  						<option selected value="1">And</option>
+		  						<option value="2">Or</option>
+		  						<option value="3">Not</option>
+							</select>
+							</div>
+				        	
+				        	
+				        	<div class="part">
+				        	<select class="browser-default custom-select col-md-3" name="prefix2">
+		  						<option value="author">Author</option>
+		  						<option selected value="title">Title</option>
+		  						<option value="year">Year</option>
+		  						<option value="language">Language</option>
+		  						<option value="keywords">Keywords</option>
+							</select>
+				            <input type="text" class="form-control col-md-6" name="content2" id="inputValue2" autocomplete="off">
+				        	<select class="browser-default custom-select col-md-2" name="operator2">
+		  						<option selected value="1">And</option>
+		  						<option value="2">Or</option>
+		  						<option value="3">Not</option>
+							</select>
+							</div>
+				        	
+				        	
+				        	<div class="part">
+				        	<select class="browser-default custom-select col-md-3" name="prefix3">
+		  						<option value="author">Author</option>
+		  						<option value="title">Title</option>
+		  						<option selected value="year">Year</option>
+		  						<option value="language">Language</option>
+		  						<option value="keywords">Keywords</option>
+							</select>
+				            <input type="text" class="form-control col-md-6" name="content3" id="inputValue3" autocomplete="off">
+				        	<select class="browser-default custom-select col-md-2" name="operator3">
+		  						<option selected value="1">And</option>
+		  						<option value="2">Or</option>
+		  						<option value="3">Not</option>
+							</select>
+							</div>
+							
+							
+							<div class="part">
+				        	<select class="browser-default custom-select col-md-3" name="prefix4">
+		  						<option value="author">Author</option>
+		  						<option value="title">Title</option>
+		  						<option value="year">Year</option>
+		  						<option selected value="language">Language</option>
+		  						<option value="keywords">Keywords</option>
+							</select>
+				            <input type="text" class="form-control col-md-6" name="content4" id="inputValue4" autocomplete="off">
+				        	<select class="browser-default custom-select col-md-2" name="operator4">
+		  						<option selected value="1">And</option>
+		  						<option value="2">Or</option>
+		  						<option value="3">Not</option>
+							</select>
+							</div>
+							
+							
+							<div class="part">
+				        	<select class="browser-default custom-select col-md-3" name="prefix5">
+		  						<option value="author">Author</option>
+		  						<option value="title">Title</option>
+		  						<option value="year">Year</option>
+		  						<option value="language">Language</option>
+		  						<option selected value="keywords">Keywords</option>
+							</select>
+				            <input type="text" class="form-control col-md-6" name="content5" id="inputValue5" autocomplete="off">
+				        	<select class="browser-default custom-select col-md-2" name="operator5">
+		  						<option selected value="1">And</option>
+		  						<option value="2">Or</option>
+		  						<option value="3">Not</option>
+							</select>
+							</div>
+				        	
+				        	
+				        	<button type="submit" class="btn btn-primary" id="advancedBtn">Search</button>
+			
+			    		</form>
+				        
+				      </div>
+				    </div>
+				  </div>
+				  
+				</div>
+	    		
+	    		
+	    		
 	    	</div>
 	    	
 	    	<div class="col-md-2 col-sm-0"></div>
@@ -175,9 +215,5 @@
 		</div>
   	 
   	 
-  	 
-  	 
-  	
-  	
   </body>
 </html>

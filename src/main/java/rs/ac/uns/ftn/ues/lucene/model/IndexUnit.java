@@ -65,8 +65,8 @@ public class IndexUnit {
 	public Document getLuceneDocument() {
 		Document d = new Document();
 		d.add(new TextField("title", title, Store.YES));
-		d.add(new TextField("text", text, Store.YES));
-		d.add(new TextField("author", author, Store.YES));
+		d.add(new TextField("text", text, Store.NO));
+//		d.add(new TextField("author", author, Store.NO));
 		d.add(new TextField("filename", filename, Store.YES));
 		d.add(new TextField("filedate", filedate, Store.YES));
 		for (String keyword : keywords) {

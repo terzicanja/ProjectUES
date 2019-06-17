@@ -4,14 +4,19 @@ import java.io.File;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import rs.ac.uns.ftn.ues.entity.Category;
+import rs.ac.uns.ftn.ues.entity.Language;
+
 public class UploadModel {
 	
 	private String title;
 	private String text;
 	private String author;
 	private String keywords;
-	private File file;
-//	private MultipartFile[] files;
+//	private File file;
+	private MultipartFile[] files;
+	private Language language;
+	private Category category;
 	
 	
 	public String getTitle() {
@@ -27,18 +32,18 @@ public class UploadModel {
 		this.keywords = keywords;
 	}
 	
-	public File getFile() {
-		return file;
-	}
-	public void setFile(File file) {
-		this.file = file;
-	}
-	//	public MultipartFile[] getFiles() {
-//		return files;
+//	public File getFile() {
+//		return file;
 //	}
-//	public void setFiles(MultipartFile[] files) {
-//		this.files = files;
+//	public void setFile(File file) {
+//		this.file = file;
 //	}
+		public MultipartFile[] getFiles() {
+		return files;
+	}
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
+	}
 	
 	public String getText() {
 		return text;
@@ -51,6 +56,18 @@ public class UploadModel {
 	}
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	public Language getLanguage() {
+		return language;
+	}
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 	

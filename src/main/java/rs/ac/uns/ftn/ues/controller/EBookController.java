@@ -36,9 +36,11 @@ import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.EBook;
 import rs.ac.uns.ftn.ues.entity.Language;
 import rs.ac.uns.ftn.ues.lucene.indexing.Indexer;
+import rs.ac.uns.ftn.ues.lucene.indexing.handlers.PDFHandler;
 import rs.ac.uns.ftn.ues.lucene.model.IndexUnit;
 import rs.ac.uns.ftn.ues.lucene.model.UploadModel;
 import rs.ac.uns.ftn.ues.service.EBookServiceInterface;
+import rs.ac.uns.ftn.ues.service.LanguageServiceInterface;
 
 @RestController
 @RequestMapping(value = "api/ebooks")
@@ -46,6 +48,9 @@ public class EBookController {
 	
 	@Autowired
 	private EBookServiceInterface ebookService;
+	
+	@Autowired
+	private LanguageServiceInterface langService;
 	
 	@Autowired
     private HttpServletRequest request;
@@ -107,19 +112,101 @@ public class EBookController {
 	
 	@PostMapping(value = "/save")
 	private ResponseEntity<String> saveFile(@ModelAttribute UploadModel file) {
-		System.out.println("ovo je file sto saljem " + file);
-		
         try {
-//        	if(Files.exists(DATA_DIR_PATH, file.getOriginalFilename()));
-//        	Files.copy(file.getInputStream(), Paths.get(DATA_DIR_PATH, file.getOriginalFilename()));
-//			saveFilee(file);
-        	indexUploadedFile(file);
+        	String indeksiraj = indexUploadedFile(file);
+        	if(indeksiraj == "" || indeksiraj == "empty" || indeksiraj == "notPDF") {
+        		System.out.println("ovo je u kontroleru: " + indeksiraj);
+        	}else {
+        		System.out.println("uspesno indeksirano nadam se");
+        		System.out.println("isto u kont: " + indeksiraj);
+        		
+        		
+//        		return new ResponseEntity<String>("Successfully uploaded!", HttpStatus.OK);
+        	}
+//        	indexUploadedFile(file); //ova linija ovdeeeeeeeeeeeeee
 		} catch (Exception e) {
 			System.out.println("ovo nije uspelo");
 			e.printStackTrace();
 		}
         return new ResponseEntity<String>("Successfully uploaded!", HttpStatus.OK);
 	}
+	
+	
+	
+	
+	private String indexUploadedFile(UploadModel model) throws IOException{
+		String rez = "";
+//		System.out.println("znaci model");
+		System.out.println("ovo je model sta god: " + model);
+		System.out.println("title iz filea: " + model.getTitle());
+		System.out.println("ovo su model.getfiles: " + model.getFiles());
+		
+    	for (MultipartFile file : model.getFiles()) {
+            if (file.isEmpty()) {
+                continue; //next please
+            }else {
+            	
+	            String fileName = saveFilee(file);
+	            if(!fileName.endsWith(".pdf")) {
+	            	rez = "notPDF";
+	            	System.out.println("nije pdf");
+	            }else if(fileName != null){
+	            	System.out.println("fajlname je pdf i nije prazan");
+	            	IndexUnit indexUnit = Indexer.getInstance().getHandler(fileName).getIndexUnit(new File(fileName));
+	            	System.out.println("u kontroleru model.gettitle jebe mater: " + model.getTitle());
+	            	String nas = indexUnit.getTitle();
+	            	System.out.println("ovo je naslov u kontroleru ali iz indexunita: " + nas);
+//	            	indexUnit.setTitle(model.getTitle());
+	            	System.out.println("aj opet ovo je autor modela: "+model.getAuthor());
+	//            	indexUnit.setAuthor(model.getAuthor());
+	//            	indexUnit.setText(model.getText());
+//	            	indexUnit.setFiledate("idk");
+//	            	List<String> keywords = new ArrayList<>();
+//	            	keywords.add("bla blaaa");
+//	            	indexUnit.setKeywords(keywords);
+	//            	indexUnit.setKeywords(new ArrayList<String>(Arrays.asList(model.getKeywords().split(" "))));
+	            	Indexer.getInstance().add(indexUnit.getLuceneDocument());
+	            	rez = "indeksirano";
+	            	
+	            	EBook ebook = new EBook();
+	            	String title = model.getTitle();
+	            	System.out.println("e ovo je title izvucen linija 173: "+ title);
+	            	if(title == null || title.equals(null) || title.equals("")) {
+	            		ebook.setTitle(indexUnit.getTitle());
+	            	}else {
+	            		ebook.setTitle(title);
+	            	}
+//	        		ebook.setTitle(indexUnit.getTitle());
+	        		ebook.setAuthor(indexUnit.getAuthor());
+	        		Category c = new Category();
+	        		c.setId(2);
+	        		c.setName("proba");
+//	        		ebook.setCategory(c);
+	        		ebook.setCategory(model.getCategory());
+	        		String keywords = model.getKeywords();
+	        		if(keywords == null || keywords.equals(null)) {
+	        			ebook.setKeywords(indexUnit.getKeywords().toString());
+	        		}else {
+	        			ebook.setKeywords(keywords);
+	        		}
+//	        		ebook.setKeywords(indexUnit.getKeywords().toString());
+	        		ebook.setYear(2078);
+	        		System.out.println("ovo je lang iz modela: " + model.getLanguage());
+	        		System.out.println("a ovo je cat iz modela: " + model.getCategory());
+//	        		Language l = langService.findOne(model.getLanguage().getId());
+	        		Language l = new Language();
+	        		l.setId(3);
+	        		l.setName("aaaa");
+//	        		ebook.setLanguage(l);
+	        		ebook.setLanguage(model.getLanguage());
+	        		ebook.setFilename(indexUnit.getFilename());
+	        		ebook = ebookService.save(ebook);
+	            }
+            }
+    	}
+    	return rez;
+    }
+	
 	
 	private String saveFilee(MultipartFile multipartFile) throws IOException {
 		String retVal = null;
@@ -136,48 +223,6 @@ public class EBookController {
 	
 	
 	
-	private void indexUploadedFile(UploadModel model) throws IOException{
-//		if (file.isEmpty()) {
-////			continue;
-//		}
-//		try {
-//			String fileName = saveFilee(file);
-//			if (fileName != null) {
-//				IndexUnit iu = Indexer.getInstance().getHandler(fileName).getIndexUnit(new File(fileName));
-//				iu.setTitle(file.get);
-//			}
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		System.out.println("znaci model");
-		System.out.println("ovo je model sta god: " + model);
-		System.out.println("ovo su model.getfiles: " + model.getFiles());
-		
-    	for (MultipartFile file : model.getFiles()) {
-
-            if (file.isEmpty()) {
-                continue; //next please
-            }
-            String fileName = saveFilee(file);
-            if(fileName != null){
-            	IndexUnit indexUnit = Indexer.getInstance().getHandler(fileName).getIndexUnit(new File(fileName));
-            	System.out.println("u kontroleru model.gettitle jebe mater: " + model.getTitle());
-            	indexUnit.setTitle(model.getTitle());
-//            	indexUnit.setTitle("naslov bratee");
-            	System.out.println("aj opet ovo je autor modela: "+model.getAuthor());
-            	indexUnit.setAuthor(model.getAuthor());
-            	indexUnit.setText(model.getText());
-            	indexUnit.setFiledate("idk");
-            	List<String> keywords = new ArrayList<>();
-            	keywords.add("bla blaaa");
-            	indexUnit.setKeywords(keywords);
-//            	indexUnit.setKeywords(new ArrayList<String>(Arrays.asList(model.getKeywords().split(" "))));
-            	Indexer.getInstance().add(indexUnit.getLuceneDocument());
-            }
-    	}
-    }
 	
 	private File getResourceFilePath(String path) {
 		URL url = this.getClass().getClassLoader().getResource(path);
@@ -250,5 +295,20 @@ public class EBookController {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -5,11 +5,18 @@ INSERT INTO authority (name) VALUES ('ROLE_USER');
 INSERT INTO authority (name) VALUES ('ROLE_ADMIN');
 INSERT INTO authority (name) VALUES ('ROLE_COMMENTATOR');
 
-INSERT INTO categories (name) VALUES ('nesto');
-INSERT INTO categories (name) VALUES ('drugo');
+INSERT INTO categories (name) VALUES ('Drama');
+INSERT INTO categories (name) VALUES ('Misterija');
+INSERT INTO categories (name) VALUES ('Roman');
+INSERT INTO categories (name) VALUES ('Horor');
+INSERT INTO categories (name) VALUES ('Krimi');
 
-INSERT INTO language (name) VALUES ('jezik');
-INSERT INTO language (name) VALUES ('drugi jezik');
+INSERT INTO language (name) VALUES ('Engleski');
+INSERT INTO language (name) VALUES ('Srpski');
+INSERT INTO language (name) VALUES ('Spanski');
+INSERT INTO language (name) VALUES ('Francuski');
+INSERT INTO language (name) VALUES ('Nemacki');
+INSERT INTO language (name) VALUES ('Holandski');
 
 INSERT INTO books (author, title, year, category_id, language_id) VALUES ('aaaaaa', 'knjigaaa', 2010, 1, 1);
 INSERT INTO books (author, title, year, category_id, language_id) VALUES ('cccccccc', 'knjigaaa 222', 2003, 1, 1);

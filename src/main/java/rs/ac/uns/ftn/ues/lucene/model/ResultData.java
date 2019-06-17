@@ -8,7 +8,7 @@ public class ResultData {
 	private String highlight;
 	
 	public ResultData() {
-		
+		super();
 	}
 
 	public ResultData(String title, String keywords, String location, String highlight) {

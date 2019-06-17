@@ -67,7 +67,6 @@ option:focus{
   margin: 10px auto 10px;
   padding: 45px 50px 45px 50px;
   position: relative;
-  mix-blend-mode: hard-light;
 }
 
 .search-form .form-group {
@@ -92,13 +91,9 @@ option:focus{
   height: 50px;
   line-height: 50px;
   padding: 0;
-  margin: -4px 0 0 0;
+  margin: 5px 0 0 0;
   font-size : 16px;
   font-family:verdana;
-  /*box-shadow: inset 0px 0px 12px 0px rgba(0,0,0,0.6);
-  box-shadow: inset 0px 0px 16px 3px rgba(0,0,0,0.55);
-  box-shadow: inset 0px 0px 16px 0px rgba(0,0,0,0.54);*/
-  box-shadow: inset 0px 0px 10px -2px rgba(0,0,0,0.45);
 }
 
 .forgot {
@@ -135,6 +130,46 @@ option:focus{
 #register{
 	z-index: 1;
 }
+
+#uploadFile{
+	cursor: pointer;
+}
+
+#uploadFileTwo{
+	height: 0px;
+	width: 0px;
+	visibility: hidden;
+	padding: 0px;
+}
+
+
+.select-wrap {
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  /*padding: 0 5px;
+  width:200px;*/
+  background-color:#fff;
+  position:relative;
+  text-align: left;
+  display: inline-block;
+}
+.select-wrap label{
+  font-size:8px;
+  text-transform: uppercase;
+  color: #777;
+  padding: 0 8px;  
+  position: absolute;
+  top:6px;
+}
+select{
+  background-color: #fff;
+  border:0px;
+  height:50px;
+  font-size: 16px;
+}
+
+
+
 
 
 .botto-text {

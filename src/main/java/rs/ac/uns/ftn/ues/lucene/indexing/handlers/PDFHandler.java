@@ -41,6 +41,7 @@ public class PDFHandler extends DocumentHandler {
 			String keywords = "" + info.getKeywords();
 			if (keywords != null) {
 				String[] splittedKeywords = keywords.split(" ");
+				System.out.println("ovo su keyw u handleru: " + splittedKeywords);
 				iu.setKeywords(new ArrayList<String>(Arrays.asList(splittedKeywords)));
 			}
 			

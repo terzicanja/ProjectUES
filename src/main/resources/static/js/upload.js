@@ -1,29 +1,87 @@
 $(document).ready(function(){
 	console.log('uplodovanje');
 	
+//	var $dropdown = $("#selectLang");
+//	$.each(result, function() {
+//	    $dropdown.append($("<option />").val(this.ImageFolderID).text(this.Name));
+//	});
+	
+	var token = localStorage.getItem('token');
+	
+	$.ajax({
+		url: 'http://localhost:8080/api/languages',
+		type: 'GET',
+		headers: {'Authorization': 'Bearer ' + token},
+		contentType: 'application/json',
+		crossDomain: true,
+		dataType: 'json',
+		success:function(data){
+			
+			console.log('jezici su: ' + data);
+			console.log(data);
+			
+			var $dropdown = $("#selectLang");
+			$.each(data, function() {
+			    $dropdown.append($("<option />").val(this.id).text(this.name));
+			});
+		}
+	});
+	
+	$.ajax({
+		url: 'http://localhost:8080/api/category',
+		type: 'GET',
+		headers: {'Authorization': 'Bearer ' + token},
+		contentType: 'application/json',
+		crossDomain: true,
+		dataType: 'json',
+		success:function(data){
+			
+			console.log('kategorije su: ' + data);
+			console.log(data);
+			
+			var $dropdown = $("#selectCat");
+			$.each(data, function() {
+			    $dropdown.append($("<option />").val(this.id).text(this.name));
+			});
+		}
+	});
+	
+	
+	
 	
 	$('#btnSubmit').on('click', function(event){
 		event.preventDefault();
 		console.log('kliknuto dugme za upload');
 		
+		var lang = $('#selectLang').val();
+		var cat = $('#selectCat').val();
+		console.log("lang i cat: " + lang + cat);
+		
+		var title = $('#title').val();
+		var keywords = $('#keywords').val();
+		console.log("title i key: " + title + keywords);
+		
+		var file = $('#uploadFile')[0].files;
 		var form = $('#fileUploadForm')[0];
+		console.log(form);
 		var data = new FormData(form);
+//		data.set("language", lang);
 		console.log(data);
 		$("#btnSubmit").prop("disabled", true);
+		
+		console.log(file);
 		
 //		var title = $('#title').val();
 //		var file = $('#uploadFile')[0].files[0];
 //		console.log(file);
 //		var data = new FormData();
-//		data.set("model", file);
+//		data.set("files", file);
 //		data.set("title", title);
 		console.log(data);
 		
 		for (var key of data.entries()) {
 	        console.log(key[1]);
 	    }
-		
-		
 		
 		
 		$.ajax({

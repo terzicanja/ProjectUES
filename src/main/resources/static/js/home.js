@@ -1,6 +1,13 @@
 $(document).ready(function(){
 	
-	
+	var url = window.location.search.slice(1).split('&');
+	var search = url[0].split('=')[1];
+	var s = window.location.search.slice(1).split('&')[0].split('=')[1];
+	var field = url[1].split('=')[1];
+	var value = url[2].split('=')[1];
+	console.log("ovo je parametar iz urla: " + search);
+	console.log("field: " + field);
+	console.log("value: " + value);
 	
 	var token = localStorage.getItem('token');
 	
@@ -10,10 +17,17 @@ $(document).ready(function(){
 //		$('#loginbtn')
 	}
 	
+//	var field = $('#luceneTermQuery input[name=field]').val();
+//    var value = $('#luceneTermQuery input[name=value]').val();
+    var data = JSON.stringify({"field":field, "value":value});
+    $("#btnSubmitLuceneQueryLanguage").prop("disabled", true);
 	
 	$.ajax({
-		url: 'http://localhost:8080/api/ebooks',
-		type: 'GET',
+//		url: 'http://localhost:8080/api/ebooks',
+//		type: 'GET',
+		url: 'http://localhost:8080/search/'+search,
+		type: 'POST',
+		data: data,
 		headers: {'Authorization': 'Bearer ' + token},
 		contentType: 'application/json',
 		crossDomain: true,
@@ -51,19 +65,6 @@ $(document).ready(function(){
 							
 							
 							
-							
-							
-							
-//							'<div class="post">'+
-//							'<img class="pic" id="pic" src="data:image/gif;base64,'+data[i].user.photo+'" onError="this.src=\x27'+u+'\x27;">'+
-//							'<a href="http://localhost:8080/html/profile.html?id='+data[i].user.username+'" class="username">'+
-//							data[i].user.username+'</a><br>'+
-//							'<p id="date">'+data[i].date+'</p>'+
-//							'<a href="http://localhost:8080/html/post.html?id='+data[i].id+'" id="title"><h3>'+data[i].title+'</h3></a><br>'+
-//							'<img id="img" src="data:image/gif;base64,'+data[i].photo+'" onError="this.src=\x27'+s+'\x27;">'+
-//						'</div>')
-//				}
-				
 			}
 		}
 	});

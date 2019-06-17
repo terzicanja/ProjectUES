@@ -32,8 +32,8 @@ public class ResultRetriever {
 	private TopScoreDocCollector collector;
 	private static int maxHits = 10;
 	
-	public ResultRetriever() {
-		collector = TopScoreDocCollector.create(10);
+	public ResultRetriever(){
+		collector=TopScoreDocCollector.create(10);
 	}
 
 	public static int getMaxHits() {
@@ -54,8 +54,7 @@ public class ResultRetriever {
 					.getBundle("application").getString("index")));
 			DirectoryReader reader = DirectoryReader.open(indexDir);
 			IndexSearcher is = new IndexSearcher(reader);
-			TopScoreDocCollector collector = TopScoreDocCollector.create(
-					maxHits);
+			TopScoreDocCollector collector = TopScoreDocCollector.create(maxHits);
 
 			List<ResultData> results = new ArrayList<ResultData>();
 
@@ -77,15 +76,17 @@ public class ResultRetriever {
 				keywords = keywords.trim();
 				String title = doc.get("title");
 				String location = doc.get("filename");
+				System.out.println("ovo je neki location sta god: " + location);
 				String highlight = "";
 				for (RequiredHighlight rh : requiredHighlights) {
 					hl = new Highlighter(new QueryScorer(query, reader, rh.getFieldName()));
-					try{
-						highlight += hl.getBestFragment(sa, rh.getFieldName(),
-								"" + getDocumentText(location));
-					}catch (InvalidTokenOffsetsException e) {
-						throw new IllegalArgumentException("Unable to make highlight");
-					}
+					System.out.println("u resultretrieveru rh getfieldname: " + rh.getFieldName());
+//					try{
+//						highlight += hl.getBestFragment(sa, rh.getFieldName(), "" + getDocumentText(location));
+//					}
+//					catch (InvalidTokenOffsetsException e) {
+//						throw new IllegalArgumentException("Unable to make highlight");
+//					}
 				}
 				rd = new ResultData(title, keywords, location, highlight);
 				results.add(rd);
