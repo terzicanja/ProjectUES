@@ -37,6 +37,12 @@ public class User implements Serializable, UserDetails {
 			inverseJoinColumns = @JoinColumn(name="authority_id", referencedColumnName="id"))
 	private Set<Authority> user_authorities = new HashSet<>();
 	
+	@ManyToOne
+	@JoinColumn(name="category_id", referencedColumnName="category_id")
+	private Category category;
+	
+//	@OneToMany(mappedBy = "user")
+//	private Set<EBook> ebooks = new HashSet<EBook>();
 	
 	public User() {
 	}
@@ -89,11 +95,24 @@ public class User implements Serializable, UserDetails {
 		this.user_authorities = user_authorities;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	
 	
-	
-	
-	
+//	public Set<EBook> getEbooks() {
+//		return ebooks;
+//	}
+//
+//	public void setEbooks(Set<EBook> ebooks) {
+//		this.ebooks = ebooks;
+//	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

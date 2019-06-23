@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -35,12 +37,14 @@ import rs.ac.uns.ftn.ues.dto.UserDTO;
 import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.EBook;
 import rs.ac.uns.ftn.ues.entity.Language;
+import rs.ac.uns.ftn.ues.entity.User;
 import rs.ac.uns.ftn.ues.lucene.indexing.Indexer;
 import rs.ac.uns.ftn.ues.lucene.indexing.handlers.PDFHandler;
 import rs.ac.uns.ftn.ues.lucene.model.IndexUnit;
 import rs.ac.uns.ftn.ues.lucene.model.UploadModel;
 import rs.ac.uns.ftn.ues.service.EBookServiceInterface;
 import rs.ac.uns.ftn.ues.service.LanguageServiceInterface;
+import rs.ac.uns.ftn.ues.service.UserServiceInterface;
 
 @RestController
 @RequestMapping(value = "api/ebooks")
@@ -53,7 +57,13 @@ public class EBookController {
 	private LanguageServiceInterface langService;
 	
 	@Autowired
+	private UserServiceInterface userService;
+	
+	@Autowired
     private HttpServletRequest request;
+	
+//	@Autowired
+//	private filestorageser
 	
 	
 	private static String DATA_DIR_PATH = "D:/Fakultet/3 godina/1 semestar/TiPzU elektronskim sadrzajima i dokumentima/workspace/ProjectUES/src/main/resources/files/";
@@ -66,6 +76,17 @@ public class EBookController {
 			booksDTO.add(new EBookDTO(p));
 		}
 		return new ResponseEntity<List<EBookDTO>>(booksDTO, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/category/{id}")
+	public ResponseEntity<List<EBook>> getBooksByCategory(@PathVariable("id") Integer id){
+		List<EBook> books = ebookService.findAllByCategory_Id(id);
+		List<EBookDTO> booksDTO = new ArrayList<EBookDTO>();
+		for(EBook p : books) {
+			booksDTO.add(new EBookDTO(p));
+		}
+		return new ResponseEntity<List<EBook>>(books, HttpStatus.OK);
 	}
 	
 	
@@ -184,7 +205,7 @@ public class EBookController {
 //	        		ebook.setCategory(c);
 	        		ebook.setCategory(model.getCategory());
 	        		String keywords = model.getKeywords();
-	        		if(keywords == null || keywords.equals(null)) {
+	        		if(keywords == null || keywords.equals(null) || keywords.equals("")) {
 	        			ebook.setKeywords(indexUnit.getKeywords().toString());
 	        		}else {
 	        			ebook.setKeywords(keywords);
@@ -194,17 +215,30 @@ public class EBookController {
 	        		System.out.println("ovo je lang iz modela: " + model.getLanguage());
 	        		System.out.println("a ovo je cat iz modela: " + model.getCategory());
 //	        		Language l = langService.findOne(model.getLanguage().getId());
-	        		Language l = new Language();
-	        		l.setId(3);
-	        		l.setName("aaaa");
+//	        		Language l = new Language();
+//	        		l.setId(3);
+//	        		l.setName("aaaa");
 //	        		ebook.setLanguage(l);
+	        		String u = model.getUser();
+	        		User user = userService.findByUsername(u);
+	        		System.out.println("ovo je user u liniji 222: " + u);
+	        		ebook.setUser(user);
 	        		ebook.setLanguage(model.getLanguage());
-	        		ebook.setFilename(indexUnit.getFilename());
+	        		String lokacija = indexUnit.getFilename();
+	        		String[] split = lokacija.split("\\\\");
+	    			String l = split[split.length-1];
+	        		ebook.setFilename(l);
 	        		ebook = ebookService.save(ebook);
 	            }
             }
     	}
     	return rez;
+    }
+	
+	public ResponseEntity<User> whoAmI(Principal user) {
+		User logged = userService.findByUsername(user.getName());
+		
+		return new ResponseEntity<User>(logged, HttpStatus.OK);
     }
 	
 	
@@ -297,7 +331,11 @@ public class EBookController {
 	}
 	
 	
-	
+//	@GetMapping(value = "/download/{id}")
+//	public ResponseEntity<Resource> downloadBook(@PathVariable("id") Integer id, HttpServletRequest request){
+//		EBook ebook = ebookService.findOne(id);
+//		Resource r = files
+//	}
 	
 	
 	

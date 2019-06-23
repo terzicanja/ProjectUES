@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.Language;
+import rs.ac.uns.ftn.ues.entity.User;
 
 public class UploadModel {
 	
@@ -17,6 +18,7 @@ public class UploadModel {
 	private MultipartFile[] files;
 	private Language language;
 	private Category category;
+	private String user;
 	
 	
 	public String getTitle() {
@@ -68,6 +70,12 @@ public class UploadModel {
 	}
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
+		this.user = user;
 	}
 	
 	

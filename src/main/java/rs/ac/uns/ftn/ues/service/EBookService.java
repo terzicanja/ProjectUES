@@ -42,4 +42,10 @@ public class EBookService implements EBookServiceInterface {
 		ebookRepository.deleteById(id);
 	}
 
+	@Override
+	public EBook findByFilename(String filename) {
+		// TODO Auto-generated method stub
+		return ebookRepository.findByFilename(filename);
+	}
+
 }

@@ -13,8 +13,29 @@ $(document).ready(function(){
 	
 	if(token == null){
 		console.log("token je null");
-		window.location.replace("http://localhost:8080/html/login.html");
+		$("#loginLink").text("Login");
+		$("#loginLink").attr("href", "/login.html")
+//		window.location.replace("http://localhost:8080/html/login.html");
 //		$('#loginbtn')
+	}else{
+		$("#loginLink").text("Logout");
+		$('#loginLink').on('click', function(){
+			localStorage.removeItem('token');
+			location.reload();
+		});
+		
+		
+		$.ajax({
+			url: 'http://localhost:8080/api/users/me',
+			type: 'GET',
+			headers: {'Authorization': 'Bearer ' + token},
+			contentType: 'application/json',
+			crossDomain: true,
+			dataType: 'json',
+			success:function(data){
+				$("#username").text(data.username);
+			}
+		});
 	}
 	
 //	var field = $('#luceneTermQuery input[name=field]').val();
@@ -47,29 +68,42 @@ $(document).ready(function(){
 			for(var i=0; i<data.length; i++){
 //				if(data[i].active==true){
 					$('.part').append('<article class="search-result row">'+
-							'<div class="col-xs-12 col-sm-12 col-md-2">'+
-								'<ul class="meta-search">'+
-									'<li><i class="glyphicon glyphicon-calendar"></i> <span>'+data[i].year+'</span></li>'+
-									'<li><i class="glyphicon glyphicon-time"></i> <span>'+data[i].author+'</span></li>'+
-									'<li><i class="material-icons">language</i></i> <span>language</span></li>'+
-								'</ul>'+
-							'</div>'+
-							'<div class="col-xs-12 col-sm-12 col-md-7 excerpet">'+
-								'<h3><a href="#" title="">'+data[i].title+'</a></h3>'+
-								'<p>ovo bi mogao biti highlight ako skontam kako</p>	'+					
-	                			'<span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>'+
-							'</div>'+
-							'<span class="clearfix borda"></span>'+
-						'</article>')
-							
-							
-							
+						'<div class="col-xs-12 col-sm-12 col-md-3 knjiga">'+
+							'<ul class="meta-search">'+
+								'<li><label>Category: </label> <span>'+data[i].category.name+'</span></li>'+
+								'<li><label>Author: </label> <span>'+data[i].author+'</span></li>'+
+								'<li><label>Language: </label> <span>'+data[i].language.name+'</span></li>'+
+							'</ul>'+
+						'</div>'+
+						'<span class="clearfix borda"></span>'+
+						'<div class="col-xs-12 col-sm-12 col-md-8 excerpet">'+
+							'<h3><a href="#" title="">'+data[i].title+'</a></h3>'+
+							'<p>ovo bi mogao biti highlight ako skontam kako</p>	'+					
+		                	'<span class="plus"><a href="#" title="Lorem ipsum"><i class="material-icons">get_app</i></a></span>'+
+						'</div>'+
+					'</article>')
 							
 			}
 		}
 	});
 	
 	
+	
+	
+	$("#searchedBooks").on('click', ".download", function() {
+	    console.log("plss radi");
+	    
+//	    var cat = $('.kategorija').val();
+	    var id = $(this).attr('id');
+	    console.log("id od knjige je: " + id);
+//	    
+//	    $(this).addClass('selected');
+//	    
+//	    window.location.replace('http://localhost:8080/index.html?category='+val);
+	    
+	    event.preventDefault();
+		return false;
+	});
 	
 	
 	

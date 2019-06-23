@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.ues.repository;
 
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -12,5 +12,7 @@ public interface EBookRepository extends JpaRepository<EBook, Integer> {
 	
 	List<EBook> findAllByCategory_Id(Integer id);
 	
+	EBook findByFilename(String filename);
+	
 
 }

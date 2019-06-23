@@ -10,6 +10,9 @@ INSERT INTO categories (name) VALUES ('Misterija');
 INSERT INTO categories (name) VALUES ('Roman');
 INSERT INTO categories (name) VALUES ('Horor');
 INSERT INTO categories (name) VALUES ('Krimi');
+INSERT INTO categories (name) VALUES ('Ljubavni');
+INSERT INTO categories (name) VALUES ('Naucni');
+INSERT INTO categories (name) VALUES ('Strucni');
 
 INSERT INTO language (name) VALUES ('Engleski');
 INSERT INTO language (name) VALUES ('Srpski');

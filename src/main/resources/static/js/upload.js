@@ -5,8 +5,36 @@ $(document).ready(function(){
 //	$.each(result, function() {
 //	    $dropdown.append($("<option />").val(this.ImageFolderID).text(this.Name));
 //	});
-	
+	var user;
 	var token = localStorage.getItem('token');
+	if(token == null){
+		console.log("token je null");
+		$("#loginLink").text("Login");
+		$("#loginLink").attr("href", "/login.html")
+//		window.location.replace("http://localhost:8080/login.html");
+	}else{
+		$("#loginLink").text("Logout");
+		$('#loginLink').on('click', function(){
+			localStorage.removeItem('token');
+			location.reload();
+		});
+		
+		
+		$.ajax({
+			url: 'http://localhost:8080/api/users/me',
+			type: 'GET',
+			headers: {'Authorization': 'Bearer ' + token},
+			contentType: 'application/json',
+			crossDomain: true,
+			dataType: 'json',
+			success:function(data){
+				$("#username").text(data.username);
+				user = data.username;
+			}
+		});
+		
+		
+	}
 	
 	$.ajax({
 		url: 'http://localhost:8080/api/languages',
@@ -77,6 +105,9 @@ $(document).ready(function(){
 //		var data = new FormData();
 //		data.set("files", file);
 //		data.set("title", title);
+		data.set("user", user);
+		console.log("ovo ispod ce biti user");
+		console.log(user);
 		console.log(data);
 		
 		for (var key of data.entries()) {

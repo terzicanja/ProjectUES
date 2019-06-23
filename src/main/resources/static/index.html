@@ -4,216 +4,62 @@
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <script type="text/javascript" src="js/index.js"></script>
     
-    <title>Search</title>
+    <title>Home</title>
   </head>
   
   <body id="SearchForm">
   
-  	
-  	
-  	 
+  
+  	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <a class="navbar-brand" href="/index.html">eBooks</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active" href="/index.html">Home</a>
+	      <a class="nav-item nav-link" href="/search.html">Search</a>
+	      <a class="nav-item nav-link" href="/upload.html">Upload</a>
+	      <a class="nav-item nav-link" id="username" href="#">username</a>
+	      <a class="nav-item nav-link" id="loginLink" href="#">Logout</a>
+	    </div>
+	  </div>
+	</nav>
+  
+  
+  
+  
+  
+  
+  
   	 <div class="search-form d-flex justify-content-center">
 		
 			<div class="col-md-2 col-sm-0"></div>
 			
 			<div class="main-div col-md-8 col-sm-12 justify-content-center">
-	    		<div class="panel">
-		   			<h3>Search eBooks</h3>
-		   			<p>Please enter your info</p>
+	    		<div class="panel" id="zaKategorije">
+	    			<button class="btn btn-primary col-md-2" value="" id="follow">Follow</button>
+		   			<h3>Categories</h3>
+		   			
+		   			<p >Please enter your info</p>
 	   			</div>
 	    		
-	    		
-	    		<div id="accordion">
-	    		
-				  <div class="card">
-				    <div class="card-header" id="headingOne">
-				      <h5 class="mb-0">
-				        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				          Search
-				        </button>
-				      </h5>
-				    </div>
-				    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-				      <div class="card-body">
-				        
-				        
-				        <form id="termSearch">
-				        	<div class="part">
-				        	<p class="naslov">Term search</p>
-			    			<select class="browser-default custom-select col-md-3" name="termField" id="termField">
-		  						<option selected value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="text">Text</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" placeholder="Value" name="termValue" id="termValue" autocomplete="off">
-							<button type="submit" class="btn btn-primary col-md-2" id="searchTerm">Search</button>
-							</div>
-						</form>
-				        	
-				        <form id="fuzzySearch">
-				        	<div class="part">
-				        	<p class="naslov">Fuzzy search</p>
-			    			<select class="browser-default custom-select col-md-3" name="fuzzyField" id="fuzzyField">
-		  						<option selected value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="text">Text</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" placeholder="Value" name="fuzzyValue" id="fuzzyValue" autocomplete="off">
-							<button type="submit" class="btn btn-primary col-md-2" id="searchFuzzy">Search</button>
-							</div>
-						</form>
-				        	
-				        <form id="phraseSearch">
-				        	<div class="part">
-				        	<p class="naslov">Phrase search</p>
-			    			<select class="browser-default custom-select col-md-3" name="phraseField" id="phraseField">
-		  						<option selected value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="text">Text</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" placeholder="Value" name="phraseValue" id="phraseValue" autocomplete="off">
-							<button type="submit" class="btn btn-primary col-md-2" id="searchPhrase">Search</button>
-							</div>
-						</form>
-				      		
-				        
-				        
-				      </div>
-				    </div>
-				  </div>
-				  
-				  
-				  <div class="card">
-				    <div class="card-header" id="headingTwo">
-				      <h5 class="mb-0">
-				        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				          Advanced search
-				        </button>
-				      </h5>
-				    </div>
-				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-				      <div class="card-body">
-				        
-				        <form id="advanced">
-	    		
-			    			<div class="part">
-			    			<select class="browser-default custom-select col-md-3" name="prefix1">
-		  						<option selected value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" name="content1" id="inputValue1" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator1">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
-							</select>
-							</div>
-				        	
-				        	
-				        	<div class="part">
-				        	<select class="browser-default custom-select col-md-3" name="prefix2">
-		  						<option value="author">Author</option>
-		  						<option selected value="title">Title</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" name="content2" id="inputValue2" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator2">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
-							</select>
-							</div>
-				        	
-				        	
-				        	<div class="part">
-				        	<select class="browser-default custom-select col-md-3" name="prefix3">
-		  						<option value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option selected value="year">Year</option>
-		  						<option value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" name="content3" id="inputValue3" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator3">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
-							</select>
-							</div>
-							
-							
-							<div class="part">
-				        	<select class="browser-default custom-select col-md-3" name="prefix4">
-		  						<option value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="year">Year</option>
-		  						<option selected value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" name="content4" id="inputValue4" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator4">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
-							</select>
-							</div>
-							
-							
-							<div class="part">
-				        	<select class="browser-default custom-select col-md-3" name="prefix5">
-		  						<option value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
-		  						<option selected value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" name="content5" id="inputValue5" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator5">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
-							</select>
-							</div>
-				        	
-				        	
-				        	<button type="submit" class="btn btn-primary" id="advancedBtn">Search</button>
-			
-			    		</form>
-				        
-				      </div>
-				    </div>
-				  </div>
-				  
-				</div>
-	    		
+	    		<div class="part"></div>
 	    		
 	    		
 	    	</div>
 	    	
 	    	<div class="col-md-2 col-sm-0"></div>
 		
-		
 		</div>
-  	 
   	 
   </body>
 </html>

@@ -11,6 +11,8 @@ public interface EBookServiceInterface {
 	
 	EBook findOne(Integer id);
 	
+	EBook findByFilename(String filename);
+	
 	EBook save(EBook ebook);
 	
 	void remove(Integer id);

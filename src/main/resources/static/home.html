@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -16,6 +18,28 @@
   </head>
   
   <body id="searchedBooks">
+  
+  
+  
+  	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <a class="navbar-brand" href="/index.html">eBooks</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active" href="/index.html">Home</a>
+	      <a class="nav-item nav-link" href="/search.html">Search</a>
+	      <a class="nav-item nav-link" href="/upload.html">Upload</a>
+	      <a class="nav-item nav-link" id="username" href="#">username</a>
+	      <a class="nav-item nav-link" id="loginLink" href="#">Logout</a>
+	    </div>
+	  </div>
+	</nav>
+  	
+  	
+  	
+  	
   	
   	
   	<div class="books-form d-flex justify-content-center">
@@ -28,20 +52,14 @@
 		   			<p>Please enter your info</p>
 	   			</div>
 	   			
-	   			<form method="POST" id="luceneTermQuery">
-			<input type="text" name="field" placeholder="field" /><br/><br/>
-		    <input type="text" name="value" placeholder="value" /><br/><br/>
-		    <input type="submit" value="Submit" id="btnSubmitLuceneTermQuery"/>
-		</form>
-	   			
 	    		<form id="Login">
 	    		
 	    			<div class="part">
 		    			<article class="search-result row">
 							<!-- <div class="col-xs-12 col-sm-12 col-md-3">
 								<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
-							</div> -->
-							<div class="col-xs-12 col-sm-12 col-md-2">
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-3">
 								<ul class="meta-search">
 									<li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
 									<li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
@@ -52,13 +70,12 @@
 								<h3><a href="#" title="">ovo je naslooov</a></h3>
 								<p>ovo bi mogao biti highlight ako skontam kako</p>						
 	                			<span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-							</div>
+							</div> -->
 							<span class="clearfix borda"></span>
 						</article>
 					</div>
 		        	
 					
-		        	<button type="submit" class="btn btn-primary" id="register">Sign up</button>
 	
 	    		</form>
 	    	</div>

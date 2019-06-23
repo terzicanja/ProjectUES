@@ -43,6 +43,10 @@ public class EBook implements Serializable {
 	@JoinColumn(name="category_id", referencedColumnName="category_id", nullable=false)
 	private Category category;
 	
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+	
 	public EBook() {
 		
 	}
@@ -50,7 +54,7 @@ public class EBook implements Serializable {
 	
 
 	public EBook(Integer id, String title, String author, String keywords, Integer year, String filename, String mime,
-			Language language, Category category) {
+			Language language, Category category, User user) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -61,6 +65,7 @@ public class EBook implements Serializable {
 		this.mime = mime;
 		this.language = language;
 		this.category = category;
+		this.user = user;
 	}
 
 
@@ -134,6 +139,19 @@ public class EBook implements Serializable {
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 

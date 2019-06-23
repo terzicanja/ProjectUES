@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.ues.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.ues.dto.UserDTO;
+import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.User;
+import rs.ac.uns.ftn.ues.service.CategoryServiceInterface;
 import rs.ac.uns.ftn.ues.service.UserServiceInterface;
 
 @RestController
@@ -27,6 +30,19 @@ public class UserController {
 	
 	@Autowired
 	private UserServiceInterface userService;
+	
+	@Autowired
+	private CategoryServiceInterface catService;
+	
+	
+	
+	@GetMapping(value = "/me")
+    public ResponseEntity<User> whoAmI(Principal user) {
+		User logged = userService.findByUsername(user.getName());
+		
+		return new ResponseEntity<>(logged, HttpStatus.OK);
+    }
+	
 	
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> getUsers(){
@@ -71,6 +87,19 @@ public class UserController {
 		
 		user = userService.save(user);
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/update/{username}/{category}", consumes = "application/json")
+	public ResponseEntity<User> followCategoryUser(@PathVariable("username") String username, @PathVariable("category") Integer category){
+		User user = userService.findByUsername(username);
+		Category cat = catService.findOne(category);
+		user.setCategory(cat);
+//		user.setName(userDTO.getName());
+//		user.setLastname(userDTO.getLastname());
+//		user.setPassword(userDTO.getPassword());
+		
+		user = userService.save(user);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/{username}")
