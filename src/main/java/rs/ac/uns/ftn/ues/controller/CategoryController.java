@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.ues.dto.CategoryDTO;
 import rs.ac.uns.ftn.ues.dto.EBookDTO;
+import rs.ac.uns.ftn.ues.dto.LanguageDTO;
+import rs.ac.uns.ftn.ues.dto.UserDTO;
 import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.EBook;
+import rs.ac.uns.ftn.ues.entity.User;
 import rs.ac.uns.ftn.ues.service.CategoryServiceInterface;
 import rs.ac.uns.ftn.ues.service.EBookServiceInterface;
+import rs.ac.uns.ftn.ues.service.UserServiceInterface;
 
 @RestController
 @RequestMapping(value = "api/category")
@@ -28,6 +33,9 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryServiceInterface categoryService;
+	
+	@Autowired
+	private UserServiceInterface userService;
 	
 	@Autowired
 	private EBookServiceInterface ebookService;
@@ -54,15 +62,15 @@ public class CategoryController {
 	}
 	
 	
-	@GetMapping(value = "/{id}/books")
-	public ResponseEntity<List<EBookDTO>> getBooksByCategory(@PathVariable("id") Integer id){
-		List<EBook> books = ebookService.findAllByCategory_Id(id);
-		List<EBookDTO> booksDTO = new ArrayList<EBookDTO>();
-		for(EBook e : books) {
-			booksDTO.add(new EBookDTO(e));
-		}
-		return new ResponseEntity<List<EBookDTO>>(booksDTO, HttpStatus.OK);
-	}
+//	@GetMapping(value = "/{id}/books")
+//	public ResponseEntity<List<EBookDTO>> getBooksByCategory(@PathVariable("id") Integer id){
+//		List<EBook> books = ebookService.findAllByCategory_Id(id);
+//		List<EBookDTO> booksDTO = new ArrayList<EBookDTO>();
+//		for(EBook e : books) {
+//			booksDTO.add(new EBookDTO(e, new LanguageDTO(e.getLanguage()), new CategoryDTO(e.getCategory()), new UserDTO(e.getUser())));
+//		}
+//		return new ResponseEntity<List<EBookDTO>>(booksDTO, HttpStatus.OK);
+//	}
 	
 	
 	@PostMapping(value = "/create", consumes = "application/json")
@@ -99,7 +107,15 @@ public class CategoryController {
 	public ResponseEntity<Void> deleteCategory(@PathVariable("id") Integer id){
 		Category category = categoryService.findOne(id);
 		
+		
 		if(category != null) {
+			List<User> useri = userService.findAllByCategory_id(id);
+			for(User u : useri) {
+				if(u.getCategory().getId().equals(id)) {
+					u.setCategory(null);
+					userService.save(u);
+				}
+			}
 			categoryService.remove(id);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}else {

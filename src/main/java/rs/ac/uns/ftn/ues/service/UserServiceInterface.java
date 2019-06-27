@@ -8,6 +8,8 @@ public interface UserServiceInterface {
 	
 	List<User> findAll();
 	
+	List<User> findAllByCategory_id(Integer id);
+	
 //	User findOne(Integer id);
 	
 	User findByUsername(String username);

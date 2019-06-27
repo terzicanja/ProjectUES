@@ -7,9 +7,9 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="css/upload.css">
-    <script type="text/javascript" src="js/upload.js"></script>
+    <script type="text/javascript" src="js/edit.js"></script>
     
-    <title>Upload</title>
+    <title>Edit profile</title>
   </head>
   
   <body id="SearchForm">
@@ -31,67 +31,38 @@
 	</nav>
   
   
-  	
-  	 
   	 <div class="search-form d-flex justify-content-center">
 		
 			<div class="col-md-2 col-sm-0"></div>
 		
 			<div class="main-div col-md-8 col-sm-12 justify-content-center">
 	    		<div class="panel">
-		   			<h3>Upload eBook</h3>
+		   			<h3>Edit profile</h3>
 		   			<p>Please enter your info</p>
 	   			</div>
-	    		<!-- <form id="Login"> -->
 	    		
 	    			<div class="part">
 					
-					<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
-						
-						<input type="text" class="form-control" name="title" placeholder="Title" id="title"/><br/><br/>
-		    			<input type="text" class="form-control" name="keywords" placeholder="Keywords" id="keywords"/><br/><br/>
-		            	<input type="file" class="form-control col-md-5" name="files" id="uploadFile"/>
-		            	<input type="file" class="form-control col-md-1" name="files" id="uploadFileTwo"/>
-		            	<div class="select-wrap col-md-3">
-			            	<label for="selectLang">Language</label>
-			            	<select class="" name="language" id="selectLang"></select>
-			            </div>
-			            <div class="select-wrap col-md-3">
-							<label for="selectCat">Category</label>
-							<select class="" name="category" id="selectCat"></select>
-						</div>
-						
-						<!-- <div class="select-wrap">
-							<label for="selectCat">Category</label>
-							<select class="browser-default custom-select" name="category" id="selectCat"></select>
-						</div> -->
-						
-		            	<input class="btn btn-primary" type="submit" value="Submit" id="btnSubmit"/>
-		            </form>
+						<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+							
+							<input type="text" class="form-control" name="name" placeholder="Name" id="name"/><br/>
+							<input type="text" class="form-control" name="lastname" placeholder="Lastname" id="lastname"/><br/>
+							<input type="text" class="form-control" name="password" placeholder="Password" id="password"/><br/>
+							<input type="text" class="form-control" name="password2" placeholder="Repeat password" id="password2"/><br/>
+							<div id="obavestenje"></div>
+			    			<button id="deleteCat">Delete</button>
+			            	<input class="btn btn-primary" type="submit" value="Submit" id="btnSubmit"/>
+			            </form>
 		            
 					</div>
 		        	
 		        	
-		        	
-		        	<!-- 
-		        	<div class="form-group">
-		            	<input type="text" class="form-control" id="inputUsername" autocomplete="off" placeholder="Username">
-		        	</div>
-					 -->
-		        	
-	
-	    		<!-- </form> -->
 	    	</div>
 	    	
 	    	<div class="col-md-2 col-sm-0"></div>
 		
-		
 		</div>
   	 
-  	 
-  	 
-  	 
-  	
   	
   </body>
 </html>

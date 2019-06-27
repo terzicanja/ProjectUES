@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.ues.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -13,10 +14,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,8 +38,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import rs.ac.uns.ftn.ues.dto.CategoryDTO;
 import rs.ac.uns.ftn.ues.dto.EBookDTO;
+import rs.ac.uns.ftn.ues.dto.LanguageDTO;
 import rs.ac.uns.ftn.ues.dto.UserDTO;
 import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.EBook;
@@ -73,20 +81,34 @@ public class EBookController {
 		List<EBook> books = ebookService.findAll();
 		List<EBookDTO> booksDTO = new ArrayList<EBookDTO>();
 		for(EBook p : books) {
-			booksDTO.add(new EBookDTO(p));
+			UserDTO udto = new UserDTO(p.getUser());
+			booksDTO.add(new EBookDTO(p, new LanguageDTO(p.getLanguage()), new CategoryDTO(p.getCategory()),udto));
 		}
 		return new ResponseEntity<List<EBookDTO>>(booksDTO, HttpStatus.OK);
 	}
 	
 	
 	@GetMapping(value = "/category/{id}")
-	public ResponseEntity<List<EBook>> getBooksByCategory(@PathVariable("id") Integer id){
+	public ResponseEntity<List<EBookDTO>> getBooksByCategory(@PathVariable("id") Integer id){
 		List<EBook> books = ebookService.findAllByCategory_Id(id);
 		List<EBookDTO> booksDTO = new ArrayList<EBookDTO>();
 		for(EBook p : books) {
-			booksDTO.add(new EBookDTO(p));
+			UserDTO udto = new UserDTO(p.getUser());
+			booksDTO.add(new EBookDTO(p, new LanguageDTO(p.getLanguage()), new CategoryDTO(p.getCategory()), udto));
 		}
-		return new ResponseEntity<List<EBook>>(books, HttpStatus.OK);
+		return new ResponseEntity<List<EBookDTO>>(booksDTO, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/user/{id}")
+	public ResponseEntity<List<EBookDTO>> getBooksByUser(@PathVariable("id") Integer id){
+		List<EBook> books = ebookService.findAllByUser_Id(id);
+		List<EBookDTO> booksDTO = new ArrayList<EBookDTO>();
+		for(EBook p : books) {
+			UserDTO udto = new UserDTO(p.getUser());
+			booksDTO.add(new EBookDTO(p, new LanguageDTO(p.getLanguage()), new CategoryDTO(p.getCategory()), udto));
+		}
+		return new ResponseEntity<List<EBookDTO>>(booksDTO, HttpStatus.OK);
 	}
 	
 	
@@ -105,11 +127,29 @@ public class EBookController {
 			return new ResponseEntity<EBookDTO>(HttpStatus.NOT_FOUND);
 		}else {
 //			EBook ebook = ebookService.findOne(id);
-			return new ResponseEntity<EBookDTO>(new EBookDTO(ebook), HttpStatus.OK);
+			UserDTO udto = new UserDTO(ebook.getUser());
+			return new ResponseEntity<EBookDTO>(new EBookDTO(ebook, new LanguageDTO(ebook.getLanguage()), new CategoryDTO(ebook.getCategory()), udto), HttpStatus.OK);
 		}
 		
 	}
 	
+	
+	@GetMapping(value = "/index/{id}")
+	public ResponseEntity<Boolean> index(@PathVariable("id") Integer id){
+		EBook ebook = ebookService.findOne(id);
+		if(ebook == null) {
+			return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+		}else {
+//			Path path = 
+			Path path = Paths.get(DATA_DIR_PATH + ebook.getFilename());
+			File file = new File(DATA_DIR_PATH + ebook.getFilename());
+			Indexer.getInstance().index(file);
+//			EBook ebook = ebookService.findOne(id);
+//			UserDTO udto = new UserDTO(ebook.getUser());
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}
+		
+	}
 	
 	
 	
@@ -157,10 +197,7 @@ public class EBookController {
 	
 	private String indexUploadedFile(UploadModel model) throws IOException{
 		String rez = "";
-//		System.out.println("znaci model");
 		System.out.println("ovo je model sta god: " + model);
-		System.out.println("title iz filea: " + model.getTitle());
-		System.out.println("ovo su model.getfiles: " + model.getFiles());
 		
     	for (MultipartFile file : model.getFiles()) {
             if (file.isEmpty()) {
@@ -174,54 +211,47 @@ public class EBookController {
 	            }else if(fileName != null){
 	            	System.out.println("fajlname je pdf i nije prazan");
 	            	IndexUnit indexUnit = Indexer.getInstance().getHandler(fileName).getIndexUnit(new File(fileName));
-	            	System.out.println("u kontroleru model.gettitle jebe mater: " + model.getTitle());
 	            	String nas = indexUnit.getTitle();
-	            	System.out.println("ovo je naslov u kontroleru ali iz indexunita: " + nas);
 //	            	indexUnit.setTitle(model.getTitle());
-	            	System.out.println("aj opet ovo je autor modela: "+model.getAuthor());
-	//            	indexUnit.setAuthor(model.getAuthor());
-	//            	indexUnit.setText(model.getText());
-//	            	indexUnit.setFiledate("idk");
 //	            	List<String> keywords = new ArrayList<>();
 //	            	keywords.add("bla blaaa");
 //	            	indexUnit.setKeywords(keywords);
-	//            	indexUnit.setKeywords(new ArrayList<String>(Arrays.asList(model.getKeywords().split(" "))));
-	            	Indexer.getInstance().add(indexUnit.getLuceneDocument());
-	            	rez = "indeksirano";
+//	            	indexUnit.setKeywords(new ArrayList<String>(Arrays.asList(model.getKeywords().split(" "))));
+	            	
+	            	
 	            	
 	            	EBook ebook = new EBook();
 	            	String title = model.getTitle();
-	            	System.out.println("e ovo je title izvucen linija 173: "+ title);
 	            	if(title == null || title.equals(null) || title.equals("")) {
 	            		ebook.setTitle(indexUnit.getTitle());
 	            	}else {
+	            		indexUnit.setTitle(title);
 	            		ebook.setTitle(title);
 	            	}
-//	        		ebook.setTitle(indexUnit.getTitle());
 	        		ebook.setAuthor(indexUnit.getAuthor());
-	        		Category c = new Category();
-	        		c.setId(2);
-	        		c.setName("proba");
-//	        		ebook.setCategory(c);
 	        		ebook.setCategory(model.getCategory());
 	        		String keywords = model.getKeywords();
 	        		if(keywords == null || keywords.equals(null) || keywords.equals("")) {
-	        			ebook.setKeywords(indexUnit.getKeywords().toString());
+	        			String key = "";
+	        			for(String k : indexUnit.getKeywords()) {
+	        				key = key + " " + k;
+//	        				ebook.setKeywords(k);
+	        			}
+	        			ebook.setKeywords(key);
+//	        			ebook.setKeywords(indexUnit.getKeywords().toString());
 	        		}else {
+	        			indexUnit.setKeywords(new ArrayList<String>(Arrays.asList(model.getKeywords().split(" "))));
 	        			ebook.setKeywords(keywords);
 	        		}
+	        		indexUnit.setLanguage(model.getLanguage().getName());
+	        		Indexer.getInstance().add(indexUnit.getLuceneDocument());
+	            	rez = "indeksirano";
+	        		
 //	        		ebook.setKeywords(indexUnit.getKeywords().toString());
-	        		ebook.setYear(2078);
 	        		System.out.println("ovo je lang iz modela: " + model.getLanguage());
 	        		System.out.println("a ovo je cat iz modela: " + model.getCategory());
-//	        		Language l = langService.findOne(model.getLanguage().getId());
-//	        		Language l = new Language();
-//	        		l.setId(3);
-//	        		l.setName("aaaa");
-//	        		ebook.setLanguage(l);
 	        		String u = model.getUser();
 	        		User user = userService.findByUsername(u);
-	        		System.out.println("ovo je user u liniji 222: " + u);
 	        		ebook.setUser(user);
 	        		ebook.setLanguage(model.getLanguage());
 	        		String lokacija = indexUnit.getFilename();
@@ -281,7 +311,6 @@ public class EBookController {
 	public ResponseEntity<EBookDTO> saveBook(@RequestBody EBookDTO ebookDTO){
 		EBook ebook =  new EBook();
 		ebook.setTitle(ebookDTO.getTitle());
-		ebook.setYear(ebookDTO.getYear());
 		ebook.setAuthor(ebookDTO.getAuthor());
 		
 		Category c = new Category();
@@ -294,7 +323,8 @@ public class EBookController {
 		ebook.setLanguage(l);
 		
 		ebook = ebookService.save(ebook);
-		return new ResponseEntity<EBookDTO>(new EBookDTO(ebook), HttpStatus.CREATED);
+		UserDTO udto = new UserDTO(ebook.getUser());
+		return new ResponseEntity<EBookDTO>(new EBookDTO(ebook, new LanguageDTO(ebook.getLanguage()), new CategoryDTO(ebook.getCategory()), udto), HttpStatus.CREATED);
 	}
 	
 	
@@ -310,11 +340,11 @@ public class EBookController {
 			return new ResponseEntity<EBookDTO>(HttpStatus.NOT_FOUND);
 		}
 		ebook.setTitle(eBookDTO.getTitle());
-		ebook.setYear(eBookDTO.getYear());
 		ebook.setAuthor(eBookDTO.getAuthor());
 		
 		ebook = ebookService.save(ebook);
-		return new ResponseEntity<EBookDTO>(new EBookDTO(ebook), HttpStatus.CREATED);
+		UserDTO udto = new UserDTO(ebook.getUser());
+		return new ResponseEntity<EBookDTO>(new EBookDTO(ebook, new LanguageDTO(ebook.getLanguage()), new CategoryDTO(ebook.getCategory()), udto), HttpStatus.CREATED);
 		
 	}
 	
@@ -323,19 +353,55 @@ public class EBookController {
 	public ResponseEntity<Void> deleteBook(@PathVariable("id") Integer id){
 		EBook book = ebookService.findOne(id);
 		if (book != null) {
-			ebookService.remove(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
+			boolean iu = Indexer.getInstance().delete(DATA_DIR_PATH+book.getFilename());
+			if(iu==true) {
+				System.out.println("indeks je obrisan");
+				ebookService.remove(id);
+				return new ResponseEntity<Void>(HttpStatus.OK);
+			}else {
+				System.out.println("indeks nije obrisan");
+				return new ResponseEntity<Void>(HttpStatus.I_AM_A_TEAPOT);
+			}
+			
 		}else {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	
-//	@GetMapping(value = "/download/{id}")
-//	public ResponseEntity<Resource> downloadBook(@PathVariable("id") Integer id, HttpServletRequest request){
-//		EBook ebook = ebookService.findOne(id);
+	@GetMapping(value = "/download/{filename}", consumes = "application/pdf")
+	public ResponseEntity<Resource> downloadBook(@PathVariable("filename") String filename, HttpServletResponse response){
+		try {
+			Path path = Paths.get(DATA_DIR_PATH + filename);
+			String p = DATA_DIR_PATH + filename;
+			System.out.println("ovo je u dwnl path: " + path);
+			Resource r = new UrlResource(path.toUri());
+			System.out.println("aj da vidimo sta je r: " + r);
+			if(r.exists()) {
+				System.out.println("znaci ako r postoji");
+				InputStream is = r.getInputStream();
+				IOUtils.copy(is, response.getOutputStream());
+				response.flushBuffer();
+//				return new ResponseEntity<Resource>(HttpStatus.OK);
+				
+				return ResponseEntity.ok()
+		                .contentType(MediaType.APPLICATION_PDF)
+		                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + r.getFilename() + "\"")
+		                .header(HttpHeaders.CONTENT_TYPE, "application/pdf;charset=utf-8")
+		                .body(r);
+			}else {
+				System.out.println("r ne postoji");
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("neuspela akcija skidanja knjige");
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+//		EBook ebook = ebookService.findByFilename(filename);
 //		Resource r = files
-//	}
+		
+	}
 	
 	
 	

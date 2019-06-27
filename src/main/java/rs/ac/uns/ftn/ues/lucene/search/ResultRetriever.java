@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.search.IndexSearcher;
@@ -44,8 +45,7 @@ public class ResultRetriever {
 		ResultRetriever.maxHits = maxHits;
 	}
 	
-	public static List<ResultData> getResults(Query query,
-			List<RequiredHighlight> requiredHighlights) {
+	public static List<ResultData> getResults(Query query, List<RequiredHighlight> requiredHighlights) {
 		if (query == null) {
 			return null;
 		}
@@ -72,17 +72,18 @@ public class ResultRetriever {
 				String keywords = "";
 				for (String keyword : allKeywords) {
 					keywords += keyword.trim() + " ";
+					System.out.println("resultretriever linija 74key: "+keyword);
 				}
 				keywords = keywords.trim();
 				String title = doc.get("title");
 				String location = doc.get("filename");
-				System.out.println("ovo je neki location sta god: " + location);
 				String highlight = "";
 				for (RequiredHighlight rh : requiredHighlights) {
 					hl = new Highlighter(new QueryScorer(query, reader, rh.getFieldName()));
 					System.out.println("u resultretrieveru rh getfieldname: " + rh.getFieldName());
 //					try{
-//						highlight += hl.getBestFragment(sa, rh.getFieldName(), "" + getDocumentText(location));
+//						highlight += hl.getBestFragments(sa, rh.getFieldName(), "" + getDocumentText(location), 100);
+////						highlight += hl.getBestFragment(sa, rh.getFieldName(), "" + getDocumentText(location));
 //					}
 //					catch (InvalidTokenOffsetsException e) {
 //						throw new IllegalArgumentException("Unable to make highlight");

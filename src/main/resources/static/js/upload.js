@@ -11,7 +11,8 @@ $(document).ready(function(){
 		console.log("token je null");
 		$("#loginLink").text("Login");
 		$("#loginLink").attr("href", "/login.html")
-//		window.location.replace("http://localhost:8080/login.html");
+		alert("You have to be logged in for this action!");
+		window.location.replace("http://localhost:8080");
 	}else{
 		$("#loginLink").text("Logout");
 		$('#loginLink').on('click', function(){

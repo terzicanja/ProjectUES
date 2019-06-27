@@ -16,7 +16,6 @@ public class IndexUnit {
 	private String filename;
 	private String filedate;
 	private String language;
-	//!!!!!!!!!!!!!!!!!!! mozda i lang treba
 	
 	public String getTitle() {
 		return title;

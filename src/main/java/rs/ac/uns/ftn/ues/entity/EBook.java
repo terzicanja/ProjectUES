@@ -19,26 +19,16 @@ public class EBook implements Serializable {
 	@Column(name = "author", unique = false, nullable = true)
 	private String author;
 	
-	//ovo stvarno nzm sta ce mi
 	@Column(name = "keywords", unique = false, nullable = true)
 	private String keywords;
-	
-	@Column(name = "year", unique = false, nullable = true)
-	private Integer year;
 	
 	@Column(name = "filename", nullable = true)
 	private String filename;
 	
-	//nije obavezno valjda
-	@Column(name = "mime", unique = false, nullable = true)
-	private String mime;
-	
-//	@Column(name = "language", unique = false, nullable = true)
 	@ManyToOne
 	@JoinColumn(name="language_id", referencedColumnName="language_id", nullable=false)
 	private Language language;
 	
-//	@Column(name = "category", unique = false, nullable = true)
 	@ManyToOne
 	@JoinColumn(name="category_id", referencedColumnName="category_id", nullable=false)
 	private Category category;
@@ -51,18 +41,14 @@ public class EBook implements Serializable {
 		
 	}
 	
-	
-
-	public EBook(Integer id, String title, String author, String keywords, Integer year, String filename, String mime,
+	public EBook(Integer id, String title, String author, String keywords, String filename,
 			Language language, Category category, User user) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.keywords = keywords;
-		this.year = year;
 		this.filename = filename;
-		this.mime = mime;
 		this.language = language;
 		this.category = category;
 		this.user = user;
@@ -101,22 +87,6 @@ public class EBook implements Serializable {
 		this.keywords = keywords;
 	}
 
-	public Integer getYear() {
-		return year;
-	}
-
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-
-	public String getMime() {
-		return mime;
-	}
-
-	public void setMime(String mime) {
-		this.mime = mime;
-	}
-
 	public Language getLanguage() {
 		return language;
 	}
@@ -141,35 +111,19 @@ public class EBook implements Serializable {
 		this.filename = filename;
 	}
 
-	
-
-
 	public User getUser() {
 		return user;
 	}
-
-
 
 	public void setUser(User user) {
 		this.user = user;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "EBook [id=" + id + ", title=" + title + ", author=" + author + ", keywords=" + keywords + ", year="
-				+ year + ", filename=" + filename + ", mime=" + mime + ", language=" + language + ", category="
+		return "EBook [id=" + id + ", title=" + title + ", author=" + author + ", keywords=" + keywords + ", filename=" + filename + ", language=" + language + ", category="
 				+ category + "]";
 	}
 
-
-
-	
-	
-	
-	
-	
-	
 
 }

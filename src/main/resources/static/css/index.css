@@ -11,7 +11,9 @@ body#SearchForm{
 	background-attachment: fixed;
 }
 
-
+i.fa.fa-download {
+    color: white;
+}
 
 .custom-select{
 	color: black;
@@ -114,6 +116,18 @@ option:focus{
 	line-height: normal;
 	font-size: 14px;
 }
+#edit{
+	float: right;
+	height: 30px;
+	line-height: normal;
+	font-size: 14px;
+}
+#add{
+	float: right;
+	height: 30px;
+	line-height: normal;
+	font-size: 14px;
+}
 
 button.selected{
   background: #f0ad4e none repeat scroll 0 0;
@@ -135,7 +149,14 @@ button.selected{
 	background-color: gray;
 }
 
+#korisnik{
+	text-align: left;
+}
 
+#categ{
+	display: inline-block;
+	margin-left: 5px;
+}
 
 
 #headingTwo{

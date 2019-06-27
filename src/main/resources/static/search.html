@@ -25,23 +25,11 @@
 	      <a class="nav-item nav-link" href="/index.html">Home</a>
 	      <a class="nav-item nav-link active" href="/search.html">Search</a>
 	      <a class="nav-item nav-link" href="/upload.html">Upload</a>
-	      <a class="nav-item nav-link" id="username" href="#">username</a>
+	      <a class="nav-item nav-link" id="username" href="/profile.html">username</a>
 	      <a class="nav-item nav-link" id="loginLink" href="#">Logout</a>
 	    </div>
 	  </div>
 	</nav>
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
   	
   	
   	 
@@ -69,15 +57,13 @@
 				    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 				      <div class="card-body">
 				        
-				        
 				        <form id="termSearch">
 				        	<div class="part">
 				        	<p class="naslov">Term search</p>
 			    			<select class="browser-default custom-select col-md-3" name="termField" id="termField">
-		  						<option selected value="author">Author</option>
-		  						<option value="title">Title</option>
+		  						<option selected value="title">Title</option>
 		  						<option value="text">Text</option>
-		  						<option value="year">Year</option>
+		  						<option value="author">Author</option>
 		  						<option value="language">Language</option>
 		  						<option value="keywords">Keywords</option>
 							</select>
@@ -90,10 +76,9 @@
 				        	<div class="part">
 				        	<p class="naslov">Fuzzy search</p>
 			    			<select class="browser-default custom-select col-md-3" name="fuzzyField" id="fuzzyField">
-		  						<option selected value="author">Author</option>
-		  						<option value="title">Title</option>
+		  						<option selected value="title">Title</option>
 		  						<option value="text">Text</option>
-		  						<option value="year">Year</option>
+		  						<option value="author">Author</option>
 		  						<option value="language">Language</option>
 		  						<option value="keywords">Keywords</option>
 							</select>
@@ -106,10 +91,9 @@
 				        	<div class="part">
 				        	<p class="naslov">Phrase search</p>
 			    			<select class="browser-default custom-select col-md-3" name="phraseField" id="phraseField">
-		  						<option selected value="author">Author</option>
-		  						<option value="title">Title</option>
+		  						<option selected value="title">Title</option>
 		  						<option value="text">Text</option>
-		  						<option value="year">Year</option>
+		  						<option value="author">Author</option>
 		  						<option value="language">Language</option>
 		  						<option value="keywords">Keywords</option>
 							</select>
@@ -118,7 +102,6 @@
 							</div>
 						</form>
 				      		
-				        
 				        
 				      </div>
 				    </div>
@@ -139,32 +122,29 @@
 				        <form id="advanced">
 	    		
 			    			<div class="part">
-			    			<select class="browser-default custom-select col-md-3" name="field1">
-		  						<option selected value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
+			    			<select class="browser-default custom-select col-md-3" name="field1" id="field1">
+		  						<option value="author">Author</option>
+		  						<option selected value="title">Title</option>
 		  						<option value="keywords">Keywords</option>
 							</select>
 				            <input type="text" class="form-control col-md-6" name="value1" id="value1" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator1">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
+				        	<select class="browser-default custom-select col-md-2" name="operator1" id="operator1">
+		  						<option selected value="and">And</option>
+		  						<option value="or">Or</option>
+		  						<option value="not">Not</option>
 							</select>
 							</div>
 				        	
 				        	
 				        	<div class="part">
-				        	<select class="browser-default custom-select col-md-3" name="field2">
+				        	<select class="browser-default custom-select col-md-3" name="field2" id="field2">
+				        		<option selected value="text">Text</option>
 		  						<option value="author">Author</option>
-		  						<option selected value="title">Title</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
+		  						<option value="title">Title</option>
 		  						<option value="keywords">Keywords</option>
 							</select>
-				            <input type="text" class="form-control col-md-6" name="content2" id="inputValue2" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator2">
+				            <input type="text" class="form-control col-md-6" name="value2" id="value2" autocomplete="off">
+				        	<select class="browser-default custom-select col-md-2" name="operator2" id="operator2">
 		  						<option selected value="1">And</option>
 		  						<option value="2">Or</option>
 		  						<option value="3">Not</option>
@@ -176,53 +156,13 @@
 				        	<select class="browser-default custom-select col-md-3" name="prefix3">
 		  						<option value="author">Author</option>
 		  						<option value="title">Title</option>
-		  						<option selected value="year">Year</option>
-		  						<option value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" name="content3" id="inputValue3" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator3">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
-							</select>
-							</div>
-							
-							
-							<div class="part">
-				        	<select class="browser-default custom-select col-md-3" name="prefix4">
-		  						<option value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="year">Year</option>
-		  						<option selected value="language">Language</option>
-		  						<option value="keywords">Keywords</option>
-							</select>
-				            <input type="text" class="form-control col-md-6" name="content4" id="inputValue4" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator4">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
-							</select>
-							</div>
-							
-							
-							<div class="part">
-				        	<select class="browser-default custom-select col-md-3" name="prefix5">
-		  						<option value="author">Author</option>
-		  						<option value="title">Title</option>
-		  						<option value="year">Year</option>
-		  						<option value="language">Language</option>
 		  						<option selected value="keywords">Keywords</option>
 							</select>
-				            <input type="text" class="form-control col-md-6" name="content5" id="inputValue5" autocomplete="off">
-				        	<select class="browser-default custom-select col-md-2" name="operator5">
-		  						<option selected value="1">And</option>
-		  						<option value="2">Or</option>
-		  						<option value="3">Not</option>
-							</select>
+				            <input type="text" class="form-control col-md-6" name="content3" id="inputValue3" autocomplete="off">
+				        	<div class="col-md-2"></div>
+				        	
 							</div>
-				        	
-				        	
+							
 				        	<button type="submit" class="btn btn-primary" id="advancedBtn">Search</button>
 			
 			    		</form>
@@ -233,15 +173,11 @@
 				  
 				</div>
 	    		
-	    		
-	    		
 	    	</div>
 	    	
 	    	<div class="col-md-2 col-sm-0"></div>
 		
-		
 		</div>
-  	 
   	 
   </body>
 </html>

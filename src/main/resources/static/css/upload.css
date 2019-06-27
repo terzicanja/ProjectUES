@@ -12,7 +12,10 @@ body#SearchForm{
 }
 
 
-
+#obavestenje{
+	color: red;
+	margin: 10px;
+}
 
 .custom-select{
 	color: black;

@@ -61,7 +61,7 @@ public class Indexer {
 	}
 	
 	private Indexer() {
-		this(true); //!!!!!!!!!!!!!!!!!!!! razlicito kod prof i N
+		this(true);
 	}
 
 	public File getIndexDirPath() {
@@ -75,7 +75,6 @@ public class Indexer {
 	public Directory getIndexDir() {
 		return indexDir;
 	}
-	
 	
 	public boolean delete(String filename) {
 		Term delTerm = new Term("filename", filename);
@@ -167,7 +166,7 @@ public class Indexer {
 				}
 			}
 			this.indexWriter.commit();
-			System.out.println("gotovo indeksiranjeeee");
+			System.out.println("gotovo indeksiranjee");
 		} catch (IOException e) {
 			System.out.println("indexiranje nije izvrseno");
 		}

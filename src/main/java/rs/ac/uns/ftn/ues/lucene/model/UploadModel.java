@@ -1,12 +1,9 @@
 package rs.ac.uns.ftn.ues.lucene.model;
 
-import java.io.File;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.Language;
-import rs.ac.uns.ftn.ues.entity.User;
 
 public class UploadModel {
 	

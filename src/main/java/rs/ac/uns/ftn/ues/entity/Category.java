@@ -1,6 +1,8 @@
 package rs.ac.uns.ftn.ues.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -15,6 +17,9 @@ public class Category implements Serializable {
 	
 	@Column(name = "name", unique = false, nullable = true)
 	private String name;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="category")
+	private List<EBook> ebooks = new ArrayList<EBook>();
 	
 	public Category() {
 		
@@ -40,7 +45,6 @@ public class Category implements Serializable {
 	public String toString() {
 		return "Category [id=" + id + ", name=" + name + "]";
 	}
-	
 	
 
 }

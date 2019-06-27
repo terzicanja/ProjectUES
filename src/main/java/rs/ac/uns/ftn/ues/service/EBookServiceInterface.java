@@ -9,6 +9,10 @@ public interface EBookServiceInterface {
 	
 	List<EBook> findAllByCategory_Id(Integer id);
 	
+	List<EBook> findAllByLanguage_Id(Integer id);
+	
+	List<EBook> findAllByUser_Id(Integer id);
+	
 	EBook findOne(Integer id);
 	
 	EBook findByFilename(String filename);

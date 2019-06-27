@@ -77,6 +77,28 @@ $(document).ready(function(){
 	
 	
 	
+	$('#advancedBtn').on('click', function(event){
+		console.log("pretrazujem advanced");
+		
+//		var field1 = $('#field1').find(":selected").text();
+		var field1 = $('#field1').val();
+		var value1 = $('#value1').val();
+		var operator1 = $('#operator1').val();
+		var field2 = $('#field2').val();
+		var value2 = $('#value2').val();
+		var operator2 = $('#operator2').val();
+		console.log("field: " + field1 + " value: " + value1 + " operator1: " + operator1);
+		console.log("field: " + field2 + " value: " + value2 + " operator1: " + operator2);
+		
+		window.location.replace('http://localhost:8080/home.html?search=boolean&field1='+field1+'&value1='+value1+'&operator='+operator1+'&field2='+field2+'&value2='+value2);
+		
+		event.preventDefault();
+		return false;
+		
+	});
+	
+	
+	
 	
 
 });

@@ -36,7 +36,7 @@ $(document).ready(function(){
 //				$window.localStorage.token = JSON.stringify(data.access_token);
 				localStorage.setItem('token', data.access_token);
 				
-//				window.location.replace("http://localhost:8080/");
+				window.location.replace("http://localhost:8080/");
 			},
 			error : function(e) {
 				alert("Error!")

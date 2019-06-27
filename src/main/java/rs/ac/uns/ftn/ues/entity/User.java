@@ -1,14 +1,18 @@
 package rs.ac.uns.ftn.ues.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "users")
@@ -31,18 +35,22 @@ public class User implements Serializable, UserDetails {
 	@Column(name = "password", unique = false, nullable = false)
 	private String password;
 	
-	@ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name="user_authority",
 			joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
 			inverseJoinColumns = @JoinColumn(name="authority_id", referencedColumnName="id"))
 	private Set<Authority> user_authorities = new HashSet<>();
 	
+//	@ManyToOne
+//	@JoinColumn(name="authority_id", referencedColumnName="id")
+//	private Authority authority;
+	
 	@ManyToOne
 	@JoinColumn(name="category_id", referencedColumnName="category_id")
 	private Category category;
 	
-//	@OneToMany(mappedBy = "user")
-//	private Set<EBook> ebooks = new HashSet<EBook>();
+	@OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
+	private List<EBook> ebooks = new ArrayList<EBook>();
 	
 	public User() {
 	}
@@ -103,43 +111,38 @@ public class User implements Serializable, UserDetails {
 		this.category = category;
 	}
 
+	public List<EBook> getEbooks() {
+		return ebooks;
+	}
+
+	public void setEbooks(List<EBook> ebooks) {
+		this.ebooks = ebooks;
+	}
 	
 	
-//	public Set<EBook> getEbooks() {
-//		return ebooks;
-//	}
-//
-//	public void setEbooks(Set<EBook> ebooks) {
-//		this.ebooks = ebooks;
-//	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return user_authorities;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -148,16 +151,6 @@ public class User implements Serializable, UserDetails {
 		return "User [id=" + id + ", name=" + name + ", lastname=" + lastname + ", username=" + username + ", password="
 				+ password + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 

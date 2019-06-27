@@ -12,7 +12,6 @@ public class UserTokenState {
         this.access_token = access_token;
     }
 	
-
 	public String getAccess_token() {
 		return access_token;
 	}

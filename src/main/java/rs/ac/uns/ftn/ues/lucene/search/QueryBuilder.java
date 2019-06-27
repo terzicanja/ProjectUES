@@ -8,8 +8,6 @@ import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TermRangeQuery;
-import org.apache.lucene.util.BytesRef;
 
 import rs.ac.uns.ftn.ues.lucene.indexing.analysers.SerbianAnalyzer;
 import rs.ac.uns.ftn.ues.lucene.model.SearchType;

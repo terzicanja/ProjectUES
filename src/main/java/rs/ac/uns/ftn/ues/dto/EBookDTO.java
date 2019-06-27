@@ -10,25 +10,33 @@ public class EBookDTO implements Serializable {
 	private String title;
 	private String author;
 	private String keywords;
-	private Integer year;
-	private String mime;
+	private String filename;
+	private LanguageDTO language;
+	private CategoryDTO category;
+	private UserDTO user;
 	
 	public EBookDTO() {
 		super();
 	}
-
-	public EBookDTO(Integer id, String title, String author, String keywords, Integer year, String mime) {
+	
+	
+	public EBookDTO(Integer id, String title, String author, String keywords, String filename, LanguageDTO language,
+			CategoryDTO category, UserDTO user) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.keywords = keywords;
-		this.year = year;
-		this.mime = mime;
+		this.filename = filename;
+		this.language = language;
+		this.category = category;
+		this.user = user;
 	}
+
+
 	
-	public EBookDTO(EBook ebook) {
-		this(ebook.getId(), ebook.getTitle(), ebook.getAuthor(), ebook.getKeywords(), ebook.getYear(), ebook.getMime());
+	public EBookDTO(EBook ebook, LanguageDTO languageDTO, CategoryDTO categoryDTO, UserDTO userDTO) {
+		this(ebook.getId(), ebook.getTitle(), ebook.getAuthor(), ebook.getKeywords(), ebook.getFilename(), languageDTO, categoryDTO, userDTO);
 	}
 
 	public Integer getId() {
@@ -62,27 +70,51 @@ public class EBookDTO implements Serializable {
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
 	}
+	
 
-	public Integer getYear() {
-		return year;
+	public String getFilename() {
+		return filename;
 	}
 
-	public void setYear(Integer year) {
-		this.year = year;
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
-	public String getMime() {
-		return mime;
+
+	public LanguageDTO getLanguage() {
+		return language;
 	}
 
-	public void setMime(String mime) {
-		this.mime = mime;
+
+	public void setLanguage(LanguageDTO language) {
+		this.language = language;
 	}
+
+
+	public CategoryDTO getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(CategoryDTO category) {
+		this.category = category;
+	}
+
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+
 
 	@Override
 	public String toString() {
-		return "EBookDTO [id=" + id + ", title=" + title + ", author=" + author + ", keywords=" + keywords + ", year="
-				+ year + ", mime=" + mime + "]";
+		return "EBookDTO [id=" + id + ", title=" + title + ", author=" + author + ", keywords=" + keywords + "]";
 	}
 	
 	

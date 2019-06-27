@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.ues.dto.CategoryDTO;
 import rs.ac.uns.ftn.ues.dto.UserDTO;
 import rs.ac.uns.ftn.ues.entity.Category;
 import rs.ac.uns.ftn.ues.entity.User;
@@ -37,10 +38,18 @@ public class UserController {
 	
 	
 	@GetMapping(value = "/me")
-    public ResponseEntity<User> whoAmI(Principal user) {
-		User logged = userService.findByUsername(user.getName());
+    public ResponseEntity<UserDTO> whoAmI(Principal user) {
+		System.out.println("ovo je principal user: "+user);
+		if(user == null) {
+			System.out.println("user je null ili niko nije ulogovan");
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else {
+			User logged = userService.findByUsername(user.getName());
+			return new ResponseEntity<UserDTO>(new UserDTO(logged), HttpStatus.OK);
+		}
 		
-		return new ResponseEntity<>(logged, HttpStatus.OK);
+		
+//		return new ResponseEntity<>(logged, HttpStatus.OK);
     }
 	
 	
@@ -83,14 +92,21 @@ public class UserController {
 		User user = userService.findByUsername(username);
 		user.setName(userDTO.getName());
 		user.setLastname(userDTO.getLastname());
-		user.setPassword(userDTO.getPassword());
+		String sifra = userDTO.getPassword();
+		if(sifra == null || sifra == "" || sifra.equals("")) {
+			System.out.println("sifra je prazna, ne menjam sifru");
+		}else {
+			BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+			user.setPassword(bc.encode(userDTO.getPassword()));
+		}
+		
 		
 		user = userService.save(user);
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/update/{username}/{category}", consumes = "application/json")
-	public ResponseEntity<User> followCategoryUser(@PathVariable("username") String username, @PathVariable("category") Integer category){
+	public ResponseEntity<UserDTO> followCategoryUser(@PathVariable("username") String username, @PathVariable("category") Integer category){
 		User user = userService.findByUsername(username);
 		Category cat = catService.findOne(category);
 		user.setCategory(cat);
@@ -99,8 +115,20 @@ public class UserController {
 //		user.setPassword(userDTO.getPassword());
 		
 		user = userService.save(user);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
 	}
+	
+	@PutMapping(value = "/unfollow/{username}", consumes = "application/json")
+	public ResponseEntity<UserDTO> unfollowCategoryUser(@PathVariable("username") String username){
+		User user = userService.findByUsername(username);
+//		Category cat = catService.findOne(category);
+		user.setCategory(null);
+		
+		user = userService.save(user);
+		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
+	}
+	
+	
 	
 	@DeleteMapping(value = "/{username}")
 	public ResponseEntity<Void> deleteUser(@PathVariable("username") String username){

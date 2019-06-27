@@ -50,7 +50,7 @@ public class ResultData {
 	public void setHighlight(String highlight) {
 		this.highlight = highlight;
 	}
-	
+
 	
 
 }

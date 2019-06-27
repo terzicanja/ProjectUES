@@ -30,8 +30,6 @@ public class EBookService implements EBookServiceInterface {
 		return ebookRepository.findById(id).orElse(null);
 	}
 
-
-
 	@Override
 	public EBook save(EBook ebook) {
 		return ebookRepository.save(ebook);
@@ -44,8 +42,17 @@ public class EBookService implements EBookServiceInterface {
 
 	@Override
 	public EBook findByFilename(String filename) {
-		// TODO Auto-generated method stub
 		return ebookRepository.findByFilename(filename);
+	}
+
+	@Override
+	public List<EBook> findAllByUser_Id(Integer id) {
+		return ebookRepository.findAllByUser_Id(id);
+	}
+
+	@Override
+	public List<EBook> findAllByLanguage_Id(Integer id) {
+		return ebookRepository.findAllByLanguage_Id(id);
 	}
 
 }

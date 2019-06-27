@@ -16,9 +16,7 @@ public class Authority implements GrantedAuthority {
 	@Column(name="name")
 	String name;
 	
-	public Authority() {
-		// TODO Auto-generated constructor stub
-	}
+	public Authority() {}
 	
 	@Override
 	public String getAuthority() {

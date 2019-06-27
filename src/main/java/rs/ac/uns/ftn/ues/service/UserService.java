@@ -33,6 +33,12 @@ public class UserService implements UserServiceInterface {
 	public void remove(Integer id) {
 		userRepository.deleteById(id);
 	}
+
+	@Override
+	public List<User> findAllByCategory_id(Integer id) {
+		// TODO Auto-generated method stub
+		return userRepository.findAllByCategory_id(id);
+	}
 	
 	
 
